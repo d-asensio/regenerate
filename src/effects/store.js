@@ -1,4 +1,4 @@
-import effectsRegistry from '../effectsRegistry'
+import effectsRegistry from '../effectsRegistryDraft'
 
 export const store = new Map()
 

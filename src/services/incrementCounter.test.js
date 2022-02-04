@@ -1,4 +1,4 @@
-import storeEffects from './effects/store'
+import storeEffects from '../effects/store'
 
 import { incrementCounter } from './incrementCounter'
 

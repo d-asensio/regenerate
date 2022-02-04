@@ -1,4 +1,4 @@
-import effectsRegistry from './effectsRegistry'
+import effectsRegistry from './effectsRegistryDraft'
 
 export function dispatch (effectsStream) {
   let iteratee = effectsStream.next()
