@@ -45,6 +45,29 @@ describe('register', () => {
   })
 })
 
+describe('getFnByDescriptor', () => {
+  const storage = {
+    get: jest.fn()
+  }
+
+  const effectRegistry = createEffectRegistry({ storage })
+
+  it('should get the effect function from the storage by the effect descriptor', () => {
+    const effectDescriptor = {
+      id: 'a-effect-id',
+      args: []
+    }
+    const effectFn = function aEffectFunction () {}
+    when(storage.get)
+      .calledWith(effectDescriptor)
+      .mockReturnValue(effectFn)
+
+    const result = effectRegistry.getFnByDescriptor(effectDescriptor)
+
+    expect(result).toBe(effectFn)
+  })
+})
+
 function createEffectRegistry (dependencies = {}) {
   const {
     generator,
@@ -58,7 +81,12 @@ function createEffectRegistry (dependencies = {}) {
     return (...args) => ({ id, args })
   }
 
+  function getFnByDescriptor (id) {
+    return storage.get(id)
+  }
+
   return {
-    create
+    create,
+    getFnByDescriptor
   }
 }
