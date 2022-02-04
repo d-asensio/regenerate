@@ -21,7 +21,6 @@ const storeEffects = {
 }
 
 // Effect that errors definition
-
 const helperEffects = {
   throwErrorSometimes: createEffect(
     () => {
@@ -31,9 +30,7 @@ const helperEffects = {
 }
 
 // Event dispatcher
-function dispatch (effectStreamGenerator, payload) {
-  const effectsStream = effectStreamGenerator(payload)
-
+function dispatch (effectsStream) {
   let iteratee = effectsStream.next()
 
   do {

@@ -12,13 +12,15 @@ function * incrementCounter ({ offset }) {
 }
 
 
-dispatch(incrementCounter, { offset: 2 })
+dispatch(
+  incrementCounter({ offset: 2 })
+)
 
 console.log('Counter value:', store.get('counter'))
 
 // Example 2 reacting to errors
 
-function * handleErrors ({ offset }) {
+function * handleErrors () {
   try {
     yield helperEffects.throwErrorSometimes()
     yield storeEffects.set('errorMessage', 'No error :)')
@@ -27,8 +29,9 @@ function * handleErrors ({ offset }) {
   }
 }
 
-
-dispatch(handleErrors, { offset: 2 })
+dispatch(
+  handleErrors()
+)
 
 console.log('Counter value:', store.get('errorMessage'))
 
