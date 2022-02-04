@@ -7,7 +7,14 @@
   "author": "David Asensio Cañas <david.asensio@icloud.com>",
   "license": "MIT",
   "private": false,
+  "scripts": {
+    "run": "node src/index.js"
+  },
   "devDependencies": {
     "jest": "^27.4.7"
+  },
+  "volta": {
+    "node": "16.13.2",
+    "yarn": "1.22.17"
   }
 }
