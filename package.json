@@ -19,8 +19,20 @@
     "@babel/preset-env": "^7.16.11",
     "@types/jest": "^27.4.0",
     "babel-jest": "^27.4.6",
+    "husky": "^4.2.5",
     "jest": "^27.4.7",
+    "lint-staged": ">=10",
     "standard": "^16.0.4"
+  },
+  "lint-staged": {
+    "*.js": [
+      "yarn lint:fix"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "standard": {
     "env": [
