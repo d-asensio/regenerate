@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "run": "node src/index.js"
+    "start": "node src/index.js"
   },
   "devDependencies": {
     "jest": "^27.4.7"
