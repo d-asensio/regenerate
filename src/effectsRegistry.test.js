@@ -86,12 +86,30 @@ describe('getFnByDescriptor', () => {
       `The effect identified by "${effectId}" is not registered`
     )
   })
+
+  it('should throw a MalformedEffectDescriptorError error if the given descriptor does not contain an identifier of the event', () => {
+    const effectDescriptor = {}
+
+    const doAct = () => effectRegistry.getFnByDescriptor(effectDescriptor)
+
+    expect(doAct).toThrowWithMessage(
+      MalformedEffectDescriptorError,
+      'Malformed effect descriptor, effect descriptors must contain an id'
+    )
+  })
 })
 
 class NotRegisteredEffectError extends Error {
   constructor (message) {
     super(message)
     this.name = 'NotRegisteredEffectError'
+  }
+}
+
+class MalformedEffectDescriptorError extends Error {
+  constructor (message) {
+    super(message)
+    this.name = 'MalformedEffectDescriptorError'
   }
 }
 
@@ -108,14 +126,21 @@ function createEffectRegistry (dependencies = {}) {
     return (...args) => ({ id, args })
   }
 
-  function getFnByDescriptor ({ id }) {
-    effectExistsOrThrow(id)
-    return storage.get(id)
+  function getFnByDescriptor (descriptor) {
+    validDescriptorOrTrow(descriptor)
+    effectExistsOrThrow(descriptor.id)
+    return storage.get(descriptor.id)
   }
 
   function effectExistsOrThrow (id) {
     if (!storage.has(id)) {
       throw new NotRegisteredEffectError(`The effect identified by "${id}" is not registered`)
+    }
+  }
+
+  function validDescriptorOrTrow (descriptor) {
+    if (!descriptor.id) {
+      throw new MalformedEffectDescriptorError('Malformed effect descriptor, effect descriptors must contain an id')
     }
   }
 
