@@ -50,13 +50,14 @@ describe('getFnByDescriptor', () => {
   const effectRegistry = createEffectRegistry({ storage })
 
   it('should get the effect function from the storage by the effect descriptor', () => {
+    const effectId = 'a-effect-id'
     const effectDescriptor = {
-      id: 'a-effect-id',
+      id: effectId,
       args: []
     }
     const effectFn = function aEffectFunction () {}
     when(storage.get)
-      .calledWith(effectDescriptor)
+      .calledWith(effectId)
       .mockReturnValue(effectFn)
 
     const result = effectRegistry.getFnByDescriptor(effectDescriptor)
@@ -78,7 +79,7 @@ function createEffectRegistry (dependencies = {}) {
     return (...args) => ({ id, args })
   }
 
-  function getFnByDescriptor (id) {
+  function getFnByDescriptor ({ id }) {
     return storage.get(id)
   }
 
