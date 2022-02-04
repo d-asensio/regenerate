@@ -1,14 +1,15 @@
 import { when } from 'jest-when'
 
+const generator = {
+  uniqueId: jest.fn()
+}
+
+const storage = {
+  set: jest.fn(),
+  get: jest.fn()
+}
+
 describe('register', () => {
-  const generator = {
-    uniqueId: jest.fn()
-  }
-
-  const storage = {
-    set: jest.fn()
-  }
-
   const effectRegistry = createEffectRegistry({ generator, storage })
 
   it('should save the effect function in the storage using the id provided by the unique id generator based on the effect function name', () => {
@@ -46,10 +47,6 @@ describe('register', () => {
 })
 
 describe('getFnByDescriptor', () => {
-  const storage = {
-    get: jest.fn()
-  }
-
   const effectRegistry = createEffectRegistry({ storage })
 
   it('should get the effect function from the storage by the effect descriptor', () => {
