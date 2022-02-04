@@ -109,11 +109,14 @@ function createEffectRegistry (dependencies = {}) {
   }
 
   function getFnByDescriptor ({ id }) {
+    effectExistsOrThrow(id)
+    return storage.get(id)
+  }
+
+  function effectExistsOrThrow (id) {
     if (!storage.has(id)) {
       throw new NotRegisteredEffectError(`The effect identified by "${id}" is not registered`)
     }
-
-    return storage.get(id)
   }
 
   return {
