@@ -6,7 +6,8 @@ const generator = {
 
 const storage = {
   set: jest.fn(),
-  get: jest.fn()
+  get: jest.fn(),
+  has: jest.fn()
 }
 
 describe('register', () => {
@@ -56,6 +57,9 @@ describe('getFnByDescriptor', () => {
       args: []
     }
     const effectFn = function aEffectFunction () {}
+    when(storage.has)
+      .calledWith(effectId)
+      .mockReturnValue(true)
     when(storage.get)
       .calledWith(effectId)
       .mockReturnValue(effectFn)
@@ -64,7 +68,32 @@ describe('getFnByDescriptor', () => {
 
     expect(result).toBe(effectFn)
   })
+
+  it('should throw a NotRegisteredEffectError error if the given descriptor does not belong to any registered event', () => {
+    const effectId = 'not-registered-effect-id'
+    const effectDescriptor = {
+      id: effectId,
+      args: []
+    }
+    when(storage.has)
+      .calledWith(effectId)
+      .mockReturnValue(false)
+
+    const doAct = () => effectRegistry.getFnByDescriptor(effectDescriptor)
+
+    expect(doAct).toThrowWithMessage(
+      NotRegisteredEffectError,
+      `The effect identified by "${effectId}" is not registered`
+    )
+  })
 })
+
+class NotRegisteredEffectError extends Error {
+  constructor (message) {
+    super(message)
+    this.name = 'NotRegisteredEffectError'
+  }
+}
 
 function createEffectRegistry (dependencies = {}) {
   const {
@@ -80,6 +109,10 @@ function createEffectRegistry (dependencies = {}) {
   }
 
   function getFnByDescriptor ({ id }) {
+    if (!storage.has(id)) {
+      throw new NotRegisteredEffectError(`The effect identified by "${id}" is not registered`)
+    }
+
     return storage.get(id)
   }
 
