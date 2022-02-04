@@ -19,7 +19,7 @@ Directory containing effect declaration and registration. (similar to reffect's 
 Custom jest matcher that makes it very easy to test effect stream generators (a.k.a. `services`) in a declarative way.
 
 ##### `src/services/`
-Services are like reffect handlers, except that they are generators instead of functions, and aimed to be bounded to an entity (counter, publisher, user, etc.). Here you can also see how a service test would look like.
+Services are like reffect handlers, except that they are generators instead of functions, and intended to be bounded to an entity (counter, publisher, user, etc.). Here you can also see how a service test would look like.
 
 ##### `src/index.js`
 Example code showing how to execute services.
