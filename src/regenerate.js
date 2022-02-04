@@ -19,4 +19,3 @@ export function dispatch (effectsStream) {
     }
   } while(!iteratee.done)
 }
-
