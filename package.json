@@ -1,0 +1,13 @@
+{
+  "name": "regenerate",
+  "version": "1.0.0",
+  "description": "Manage side effects with testability and ergonomics",
+  "main": "src/index.js",
+  "repository": "https://github.com/d-asensio/regenerate.git",
+  "author": "David Asensio Cañas <david.asensio@icloud.com>",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "jest": "^27.4.7"
+  }
+}
