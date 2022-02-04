@@ -97,6 +97,15 @@ describe('getFnByDescriptor', () => {
       'Malformed effect descriptor, effect descriptors must contain an id'
     )
   })
+
+  it('should throw a MalformedEffectDescriptorError error if the given descriptor is undefined', () => {
+    const doAct = () => effectRegistry.getFnByDescriptor()
+
+    expect(doAct).toThrowWithMessage(
+      MalformedEffectDescriptorError,
+      'Malformed effect descriptor, effect descriptors must contain an id'
+    )
+  })
 })
 
 class NotRegisteredEffectError extends Error {
@@ -129,6 +138,7 @@ function createEffectRegistry (dependencies = {}) {
   function getFnByDescriptor (descriptor) {
     validDescriptorOrTrow(descriptor)
     effectExistsOrThrow(descriptor.id)
+
     return storage.get(descriptor.id)
   }
 
@@ -139,7 +149,7 @@ function createEffectRegistry (dependencies = {}) {
   }
 
   function validDescriptorOrTrow (descriptor) {
-    if (!descriptor.id) {
+    if (!descriptor?.id) {
       throw new MalformedEffectDescriptorError('Malformed effect descriptor, effect descriptors must contain an id')
     }
   }
