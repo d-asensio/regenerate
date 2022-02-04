@@ -1,5 +1,3 @@
-const {storeEffects} = require("./regenerate");
-
 test('custom matcher example (for jest)', () => {
   expect(
     incrementCounter({
