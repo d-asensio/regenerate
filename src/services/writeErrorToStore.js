@@ -1,5 +1,5 @@
-import helperEffects from "../effects/helpers";
-import storeEffects from "../effects/store";
+import helperEffects from '../effects/helpers'
+import storeEffects from '../effects/store'
 
 export function * writeErrorToStore () {
   try {

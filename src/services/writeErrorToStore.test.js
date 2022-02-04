@@ -1,7 +1,7 @@
-import storeEffects from "../effects/store";
-import helperEffects from "../effects/helpers";
+import storeEffects from '../effects/store'
+import helperEffects from '../effects/helpers'
 
-import {writeErrorToStore} from './writeErrorToStore'
+import { writeErrorToStore } from './writeErrorToStore'
 
 it('should work (error path)', () => {
   expect(
@@ -22,11 +22,10 @@ it('should work (success path)', () => {
     writeErrorToStore()
   ).toGenerateEffects([
     {
-      effect: helperEffects.throwErrorSometimes(),
+      effect: helperEffects.throwErrorSometimes()
     },
     {
       effect: storeEffects.set('errorMessage', 'No error :)')
     }
   ])
 })
-

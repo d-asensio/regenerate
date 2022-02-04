@@ -1,6 +1,4 @@
-import effectsRegistry from "../effectsRegistry";
-
-export function toGenerateEffects(receivedEffectStream, expectedEffectDescriptorsSequence) {
+export function toGenerateEffects (receivedEffectStream, expectedEffectDescriptorsSequence) {
   let iteratee = receivedEffectStream.next()
   let iteration = 0
 
@@ -8,15 +6,16 @@ export function toGenerateEffects(receivedEffectStream, expectedEffectDescriptor
     const { value: effectDescriptor } = iteratee
 
     const expectedEffectDescriptor = expectedEffectDescriptorsSequence[iteration]
-    console.log({ iteration, expectedEffectDescriptor, iteratee })
 
     expect(expectedEffectDescriptor.effect).toStrictEqual(effectDescriptor)
 
     const { throws, returns } = expectedEffectDescriptor
 
-    if (throws && returns) return {
-      message: () => `An effect cannot throw and return at the same time, check your effect descriptors`,
-      pass: false,
+    if (throws && returns) {
+      return {
+        message: () => 'An effect cannot throw and return at the same time, check your effect descriptors',
+        pass: false
+      }
     }
 
     if (throws) {
@@ -25,7 +24,7 @@ export function toGenerateEffects(receivedEffectStream, expectedEffectDescriptor
 
     iteratee = receivedEffectStream.next(returns)
     iteration++
-  } while(!iteratee.done)
+  } while (!iteratee.done)
 
   return { pass: true }
 }

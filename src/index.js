@@ -1,5 +1,5 @@
 import { dispatch } from './regenerate'
-import { store } from "./effects/store";
+import { store } from './effects/store'
 import { incrementCounter } from './services/incrementCounter'
 import { writeErrorToStore } from './services/writeErrorToStore'
 
