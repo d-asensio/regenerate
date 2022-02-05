@@ -1,21 +1,9 @@
-export class NotRegisteredEffectError extends Error {
-  constructor (message) {
-    super(message)
-    this.name = 'NotRegisteredEffectError'
-  }
-}
-
-export class MalformedEffectDescriptorError extends Error {
-  constructor (message) {
-    super(message)
-    this.name = 'MalformedEffectDescriptorError'
-  }
-}
+const defaultStorage = new Map()
 
 export function createEffectRegistry (dependencies = {}) {
   const {
     generator,
-    storage
+    storage = defaultStorage
   } = dependencies
 
   function create (effectFn) {
@@ -47,5 +35,19 @@ export function createEffectRegistry (dependencies = {}) {
   return {
     create,
     getFnByDescriptor
+  }
+}
+
+export class NotRegisteredEffectError extends Error {
+  constructor (message) {
+    super(message)
+    this.name = 'NotRegisteredEffectError'
+  }
+}
+
+export class MalformedEffectDescriptorError extends Error {
+  constructor (message) {
+    super(message)
+    this.name = 'MalformedEffectDescriptorError'
   }
 }
