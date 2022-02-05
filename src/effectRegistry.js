@@ -1,8 +1,9 @@
+const defaultUniqueIdGenerator = Symbol
 const defaultStorage = new Map()
 
 export function createEffectRegistry (dependencies = {}) {
   const {
-    uniqueIdGenerator,
+    uniqueIdGenerator = defaultUniqueIdGenerator,
     storage = defaultStorage
   } = dependencies
 
