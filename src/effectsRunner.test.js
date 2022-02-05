@@ -54,6 +54,34 @@ describe('run', () => {
 
     expect(result).toEqual(firstEffectResult)
   })
+
+  it('should throw back to the generator any error produced in the effect function', () => {
+    const firstEffectError = new Error()
+    const firstEffectDescriptor = {
+      id: 'a-effect-id',
+      args: []
+    }
+    const firstEffectFn = jest.fn(() => {
+      throw firstEffectError
+    })
+    when(effectRegistry.getFnByDescriptor)
+      .calledWith(firstEffectDescriptor)
+      .mockReturnValue(firstEffectFn)
+    let thrownError
+    const effects = (function * () {
+      try {
+        yield firstEffectDescriptor
+      } catch (e) {
+        thrownError = e
+      }
+    }())
+
+    effectsRunner.run(
+      effects
+    )
+
+    expect(thrownError).toBe(firstEffectError)
+  })
 })
 
 function createEffectsRunner (dependencies = {}) {
@@ -67,9 +95,12 @@ function createEffectsRunner (dependencies = {}) {
     const effectDescriptor = iteratee.value
     const effectFn = effectRegistry.getFnByDescriptor(effectDescriptor)
 
-    const effectResult = effectFn(...effectDescriptor.args)
-
-    iteratee = effectStream.next(effectResult)
+    try {
+      const effectResult = effectFn(...effectDescriptor.args)
+      iteratee = effectStream.next(effectResult)
+    } catch (e) {
+      effectStream.throw(e)
+    }
   }
 
   return { run }
