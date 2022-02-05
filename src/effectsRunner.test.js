@@ -30,6 +30,30 @@ describe('run', () => {
 
     expect(firstEffectFn).toHaveBeenCalledWith(...firstEffectArguments)
   })
+
+  it('should pass the result of the first effect back to the generator', () => {
+    const firstEffectResult = 'any-result'
+    const firstEffectDescriptor = {
+      id: 'a-effect-id',
+      args: []
+    }
+    const firstEffectFn = jest.fn()
+    when(firstEffectFn)
+      .mockReturnValue(firstEffectResult)
+    when(effectRegistry.getFnByDescriptor)
+      .calledWith(firstEffectDescriptor)
+      .mockReturnValue(firstEffectFn)
+    let result
+    const effects = (function * () {
+      result = yield firstEffectDescriptor
+    }())
+
+    effectsRunner.run(
+      effects
+    )
+
+    expect(result).toEqual(firstEffectResult)
+  })
 })
 
 function createEffectsRunner (dependencies = {}) {
@@ -38,12 +62,14 @@ function createEffectsRunner (dependencies = {}) {
   } = dependencies
 
   function run (effectStream) {
-    const iteratee = effectStream.next()
+    let iteratee = effectStream.next()
 
     const effectDescriptor = iteratee.value
     const effectFn = effectRegistry.getFnByDescriptor(effectDescriptor)
 
-    effectFn(...effectDescriptor.args)
+    const effectResult = effectFn(...effectDescriptor.args)
+
+    iteratee = effectStream.next(effectResult)
   }
 
   return { run }
