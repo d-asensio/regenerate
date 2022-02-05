@@ -20,10 +20,12 @@ describe('run', () => {
     when(effectRegistry.getFnByDescriptor)
       .calledWith(firstEffectDescriptor)
       .mockReturnValue(firstEffectFn)
-    const effects = [firstEffectDescriptor]
+    const effects = (function * () {
+      yield firstEffectDescriptor
+    }())
 
     effectsRunner.run(
-      effects[Symbol.iterator]()
+      effects
     )
 
     expect(firstEffectFn).toHaveBeenCalledWith(...firstEffectArguments)
