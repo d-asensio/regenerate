@@ -2,12 +2,12 @@ const defaultStorage = new Map()
 
 export function createEffectRegistry (dependencies = {}) {
   const {
-    generator,
+    uniqueIdGenerator,
     storage = defaultStorage
   } = dependencies
 
   function create (effectFn) {
-    const id = generator.uniqueId(effectFn.name)
+    const id = uniqueIdGenerator(effectFn.name)
     storage.set(id, effectFn)
 
     return (...args) => ({ id, args })

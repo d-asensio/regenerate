@@ -1,9 +1,7 @@
 import { when } from 'jest-when'
 import { createEffectRegistry, MalformedEffectDescriptorError, NotRegisteredEffectError } from './effectRegistry'
 
-const generator = {
-  uniqueId: jest.fn()
-}
+const uniqueIdGenerator = jest.fn()
 
 const storage = {
   set: jest.fn(),
@@ -12,12 +10,12 @@ const storage = {
 }
 
 describe('register', () => {
-  const effectRegistry = createEffectRegistry({ generator, storage })
+  const effectRegistry = createEffectRegistry({ uniqueIdGenerator, storage })
 
   it('should save the effect function in the storage using the id provided by the unique id generator based on the effect function name', () => {
     const effectFn = function aEffectFunction () {}
     const effectUniqueId = 'a-unique-id'
-    when(generator.uniqueId)
+    when(uniqueIdGenerator)
       .calledWith(effectFn.name)
       .mockReturnValue(effectUniqueId)
 
@@ -33,7 +31,7 @@ describe('register', () => {
       'an-argument',
       'another-argument'
     ]
-    when(generator.uniqueId)
+    when(uniqueIdGenerator)
       .calledWith(effectFn.name)
       .mockReturnValue(effectUniqueId)
 
