@@ -15,7 +15,7 @@ export function createEffectRegistry (dependencies = {}) {
   }
 
   function getFnByDescriptor (descriptor) {
-    validDescriptorOrTrow(descriptor)
+    validDescriptorOrThrow(descriptor)
     effectExistsOrThrow(descriptor.id)
 
     return storage.get(descriptor.id)
@@ -27,7 +27,7 @@ export function createEffectRegistry (dependencies = {}) {
     }
   }
 
-  function validDescriptorOrTrow (descriptor) {
+  function validDescriptorOrThrow (descriptor) {
     if (!descriptor?.id) {
       throw new MalformedEffectDescriptorError('Malformed effect descriptor, effect descriptors must contain an id')
     }
