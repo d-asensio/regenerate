@@ -1,6 +1,6 @@
 describe('constructor', () => {
   it('should construct an EffectDescriptor with a effect id', () => {
-    const effectId = 'a-effect-id'
+    const effectId = 'an-effect-id'
 
     const effectDescriptor = new EffectDescriptor(effectId)
 
@@ -13,13 +13,13 @@ describe('constructor', () => {
       'another-argument'
     ]
 
-    const effectDescriptor = new EffectDescriptor('a-effect-id', effectArguments)
+    const effectDescriptor = new EffectDescriptor('an-effect-id', effectArguments)
 
     expect(effectDescriptor.args).toStrictEqual(effectArguments)
   })
 
   it('should construct an EffectDescriptor defaulting to empty array of arguments if no arguments are provided', () => {
-    const effectDescriptor = new EffectDescriptor('a-effect-id')
+    const effectDescriptor = new EffectDescriptor('an-effect-id')
 
     expect(effectDescriptor.args).toStrictEqual([])
   })
@@ -28,7 +28,7 @@ describe('constructor', () => {
 describe('static fromObject', () => {
   it('should create a EffectDescriptor from an object containing id and arguments', () => {
     const descriptorObject = {
-      id: 'a-effect-id',
+      id: 'an-effect-id',
       args: [
         'an-argument',
         'another-argument'
@@ -44,7 +44,7 @@ describe('static fromObject', () => {
 
 describe('static isValid', () => {
   it('should take as valid a correct instance of EffectDescriptor', () => {
-    const effectDescriptor = new EffectDescriptor('a-effect-id')
+    const effectDescriptor = new EffectDescriptor('an-effect-id')
 
     const isValid = EffectDescriptor.isValid(effectDescriptor)
 
@@ -53,6 +53,14 @@ describe('static isValid', () => {
 
   it('should take as invalid a value that is not an EffectDescritor', () => {
     const isValid = EffectDescriptor.isValid({})
+
+    expect(isValid).toBeFalse()
+  })
+
+  it('should take as invalid an EffectDescriptor that does not contain an id', () => {
+    const effectDescriptor = new EffectDescriptor()
+
+    const isValid = EffectDescriptor.isValid(effectDescriptor)
 
     expect(isValid).toBeFalse()
   })
@@ -67,7 +75,18 @@ class EffectDescriptor {
   }
 
   static isValid (effectDescriptor) {
+    return (
+      EffectDescriptor.#isValidInstance(effectDescriptor) &&
+      EffectDescriptor.#containsEffectIdentifier(effectDescriptor)
+    )
+  }
+
+  static #isValidInstance (effectDescriptor) {
     return effectDescriptor instanceof EffectDescriptor
+  }
+
+  static #containsEffectIdentifier (effectDescriptor) {
+    return effectDescriptor.id !== undefined
   }
 
   constructor (id, args = []) {
