@@ -42,12 +42,32 @@ describe('static fromObject', () => {
   })
 })
 
+describe('static isValid', () => {
+  it('should take as valid a correct instance of EffectDescriptor', () => {
+    const effectDescriptor = new EffectDescriptor('a-effect-id')
+
+    const isValid = EffectDescriptor.isValid(effectDescriptor)
+
+    expect(isValid).toBeTrue()
+  })
+
+  it('should take as invalid a value that is not an EffectDescritor', () => {
+    const isValid = EffectDescriptor.isValid({})
+
+    expect(isValid).toBeFalse()
+  })
+})
+
 class EffectDescriptor {
   #id;
   #args;
 
   static fromObject ({ id, args }) {
     return new EffectDescriptor(id, args)
+  }
+
+  static isValid (effectDescriptor) {
+    return effectDescriptor instanceof EffectDescriptor
   }
 
   constructor (id, args = []) {
