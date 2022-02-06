@@ -161,18 +161,20 @@ function createEffectExecutor (dependencies = {}) {
 
 function createEffectsRunner (dependencies = {}) {
   const {
-    effectRegistry
+    effectRegistry,
+    effectExecutor = createEffectExecutor({
+      effectRegistry
+    })
   } = dependencies
 
   function run (effectStream) {
     let iteratee = effectStream.next()
 
     do {
-      const { id, args } = iteratee.value
-      const effectFn = effectRegistry.getEffectById(id)
+      const { value: effectDescriptor } = iteratee
 
       try {
-        const effectResult = effectFn(...args)
+        const effectResult = effectExecutor.exec(effectDescriptor)
         iteratee = effectStream.next(effectResult)
       } catch (e) {
         iteratee = effectStream.throw(e)
