@@ -1,3 +1,5 @@
+import { EffectDescriptor } from './effectDescriptor'
+
 const defaultUniqueIdGenerator = Symbol
 const defaultStorage = new Map()
 
@@ -11,7 +13,7 @@ export function createEffectRegistry (dependencies = {}) {
     const id = uniqueIdGenerator(effectFn.name)
     storage.set(id, effectFn)
 
-    return (...args) => ({ id, args })
+    return (...args) => EffectDescriptor.fromObject({ id, args })
   }
 
   function getFnByDescriptor (descriptor) {

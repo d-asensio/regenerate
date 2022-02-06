@@ -1,5 +1,6 @@
 import { when } from 'jest-when'
 import { createEffectRegistry, MalformedEffectDescriptorError, NotRegisteredEffectError } from './effectRegistry'
+import { EffectDescriptor } from './effectDescriptor'
 
 const uniqueIdGenerator = jest.fn()
 
@@ -39,10 +40,12 @@ describe('register', () => {
 
     expect(
       effectDescriptorFactory(...effectArguments)
-    ).toStrictEqual({
-      id: effectUniqueId,
-      args: effectArguments
-    })
+    ).toStrictEqual(
+      EffectDescriptor.fromObject({
+        id: effectUniqueId,
+        args: effectArguments
+      })
+    )
   })
 })
 
