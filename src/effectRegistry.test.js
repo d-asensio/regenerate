@@ -1,5 +1,5 @@
 import { when } from 'jest-when'
-import { createEffectRegistry, MalformedEffectDescriptorError, NotRegisteredEffectError } from './effectRegistry'
+import { createEffectRegistry, NotRegisteredEffectError } from './effectRegistry'
 import { EffectDescriptor } from './effectDescriptor'
 
 const uniqueIdGenerator = jest.fn()
@@ -45,67 +45,6 @@ describe('register', () => {
         id: effectUniqueId,
         args: effectArguments
       })
-    )
-  })
-})
-
-describe('getFnByDescriptor', () => {
-  const effectRegistry = createEffectRegistry({ storage })
-
-  it('should get the effect function from the storage by the effect descriptor', () => {
-    const effectId = 'a-effect-id'
-    const effectDescriptor = {
-      id: effectId,
-      args: []
-    }
-    const effectFn = function aEffectFunction () {}
-    when(storage.has)
-      .calledWith(effectId)
-      .mockReturnValue(true)
-    when(storage.get)
-      .calledWith(effectId)
-      .mockReturnValue(effectFn)
-
-    const result = effectRegistry.getFnByDescriptor(effectDescriptor)
-
-    expect(result).toBe(effectFn)
-  })
-
-  it('should throw a NotRegisteredEffectError error if the given descriptor does not belong to any registered event', () => {
-    const effectId = 'not-registered-effect-id'
-    const effectDescriptor = {
-      id: effectId,
-      args: []
-    }
-    when(storage.has)
-      .calledWith(effectId)
-      .mockReturnValue(false)
-
-    const doAct = () => effectRegistry.getFnByDescriptor(effectDescriptor)
-
-    expect(doAct).toThrowWithMessage(
-      NotRegisteredEffectError,
-      `The effect identified by "${effectId}" is not registered`
-    )
-  })
-
-  it('should throw a MalformedEffectDescriptorError error if the given descriptor does not contain an identifier of the event', () => {
-    const effectDescriptor = {}
-
-    const doAct = () => effectRegistry.getFnByDescriptor(effectDescriptor)
-
-    expect(doAct).toThrowWithMessage(
-      MalformedEffectDescriptorError,
-      'Malformed effect descriptor, effect descriptors must contain an id'
-    )
-  })
-
-  it('should throw a MalformedEffectDescriptorError error if the given descriptor is undefined', () => {
-    const doAct = () => effectRegistry.getFnByDescriptor()
-
-    expect(doAct).toThrowWithMessage(
-      MalformedEffectDescriptorError,
-      'Malformed effect descriptor, effect descriptors must contain an id'
     )
   })
 })

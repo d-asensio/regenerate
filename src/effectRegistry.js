@@ -16,13 +16,6 @@ export function createEffectRegistry (dependencies = {}) {
     return (...args) => EffectDescriptor.fromObject({ id, args })
   }
 
-  function getFnByDescriptor (descriptor) {
-    validDescriptorOrThrow(descriptor)
-    effectExistsOrThrow(descriptor.id)
-
-    return storage.get(descriptor.id)
-  }
-
   function getEffectById (id) {
     effectExistsOrThrow(id)
 
@@ -35,15 +28,8 @@ export function createEffectRegistry (dependencies = {}) {
     }
   }
 
-  function validDescriptorOrThrow (descriptor) {
-    if (!descriptor?.id) {
-      throw new MalformedEffectDescriptorError('Malformed effect descriptor, effect descriptors must contain an id')
-    }
-  }
-
   return {
     create,
-    getFnByDescriptor,
     getEffectById
   }
 }
@@ -52,12 +38,5 @@ export class NotRegisteredEffectError extends Error {
   constructor (message) {
     super(message)
     this.name = 'NotRegisteredEffectError'
-  }
-}
-
-export class MalformedEffectDescriptorError extends Error {
-  constructor (message) {
-    super(message)
-    this.name = 'MalformedEffectDescriptorError'
   }
 }
