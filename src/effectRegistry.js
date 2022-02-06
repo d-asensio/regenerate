@@ -21,6 +21,12 @@ export function createEffectRegistry (dependencies = {}) {
     return storage.get(descriptor.id)
   }
 
+  function getEffectById (id) {
+    effectExistsOrThrow(id)
+
+    return storage.get(id)
+  }
+
   function effectExistsOrThrow (id) {
     if (!storage.has(id)) {
       throw new NotRegisteredEffectError(`The effect identified by "${id}" is not registered`)
@@ -35,7 +41,8 @@ export function createEffectRegistry (dependencies = {}) {
 
   return {
     create,
-    getFnByDescriptor
+    getFnByDescriptor,
+    getEffectById
   }
 }
 
