@@ -5,6 +5,10 @@ const effectRegistry = {
   getEffectById: jest.fn()
 }
 
+const effectExecutor = {
+  exec: jest.fn()
+}
+
 describe('run', () => {
   const effectsRunner = createEffectsRunner({ effectRegistry })
 
@@ -99,6 +103,29 @@ describe('run', () => {
 
     expect(firstEffectFn).toHaveBeenCalled()
     expect(secondEffectFn).toHaveBeenCalled()
+  })
+
+  it('should run multiple effects using the effect executor', () => {
+    const effectsRunner = createEffectsRunner({ effectExecutor })
+
+    const firstEffectDescriptor = EffectDescriptor.fromObject({
+      id: 'a-effect-id'
+    })
+    const secondEffectDescriptor = EffectDescriptor.fromObject({
+      id: 'another-effect-id'
+    })
+
+    const effects = (function * () {
+      yield firstEffectDescriptor
+      yield secondEffectDescriptor
+    }())
+
+    effectsRunner.run(
+      effects
+    )
+
+    expect(effectExecutor.exec).toHaveBeenCalledWith(firstEffectDescriptor)
+    expect(effectExecutor.exec).toHaveBeenCalledWith(secondEffectDescriptor)
   })
 })
 
