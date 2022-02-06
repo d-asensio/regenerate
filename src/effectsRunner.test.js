@@ -14,16 +14,15 @@ describe('run', () => {
       'an-argument',
       'another-argument'
     ]
-    const firstEffectDescriptor = {
-      id: firstEffectId,
-      args: firstEffectArguments
-    }
     const firstEffectFn = jest.fn()
     when(effectRegistry.getEffectById)
       .calledWith(firstEffectId)
       .mockReturnValue(firstEffectFn)
     const effects = (function * () {
-      yield firstEffectDescriptor
+      yield EffectDescriptor.fromObject({
+        id: firstEffectId,
+        args: firstEffectArguments
+      })
     }())
 
     effectsRunner.run(
@@ -35,10 +34,6 @@ describe('run', () => {
 
   it('should pass the result of the first effect back to the generator', () => {
     const firstEffectId = 'a-effect-id'
-    const firstEffectDescriptor = {
-      id: firstEffectId,
-      args: []
-    }
     const firstEffectFn = jest.fn()
     const firstEffectResult = 'any-result'
     when(firstEffectFn)
@@ -48,7 +43,7 @@ describe('run', () => {
       .mockReturnValue(firstEffectFn)
     let result
     const effects = (function * () {
-      result = yield firstEffectDescriptor
+      result = yield EffectDescriptor.fromObject({ id: firstEffectId })
     }())
 
     effectsRunner.run(
@@ -61,10 +56,6 @@ describe('run', () => {
   it('should throw back to the generator any error produced in the effect function', () => {
     const firstEffectId = 'a-effect-id'
     const firstEffectError = new Error()
-    const firstEffectDescriptor = {
-      id: firstEffectId,
-      args: []
-    }
     const firstEffectFn = jest.fn(() => {
       throw firstEffectError
     })
@@ -74,7 +65,7 @@ describe('run', () => {
     let thrownError
     const effects = (function * () {
       try {
-        yield firstEffectDescriptor
+        yield EffectDescriptor.fromObject({ id: firstEffectId })
       } catch (e) {
         thrownError = e
       }
