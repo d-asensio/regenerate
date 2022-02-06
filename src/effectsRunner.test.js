@@ -1,4 +1,5 @@
 import { when } from 'jest-when'
+import { EffectDescriptor } from './effectDescriptor'
 
 const effectRegistry = {
   getEffectById: jest.fn()
@@ -85,6 +86,30 @@ describe('run', () => {
 
     expect(thrownError).toBe(firstEffectError)
   })
+
+  it('should run multiple effects', () => {
+    const firstEffectId = 'a-effect-id'
+    const firstEffectFn = jest.fn()
+    const secondEffectId = 'another-effect-id'
+    const secondEffectFn = jest.fn()
+    when(effectRegistry.getEffectById)
+      .calledWith(firstEffectId)
+      .mockReturnValue(firstEffectFn)
+      .calledWith(secondEffectId)
+      .mockReturnValue(secondEffectFn)
+
+    const effects = (function * () {
+      yield EffectDescriptor.fromObject({ id: firstEffectId })
+      yield EffectDescriptor.fromObject({ id: secondEffectId })
+    }())
+
+    effectsRunner.run(
+      effects
+    )
+
+    expect(firstEffectFn).toHaveBeenCalled()
+    expect(secondEffectFn).toHaveBeenCalled()
+  })
 })
 
 function createEffectsRunner (dependencies = {}) {
@@ -95,15 +120,17 @@ function createEffectsRunner (dependencies = {}) {
   function run (effectStream) {
     let iteratee = effectStream.next()
 
-    const { id, args } = iteratee.value
-    const effectFn = effectRegistry.getEffectById(id)
+    do {
+      const { id, args } = iteratee.value
+      const effectFn = effectRegistry.getEffectById(id)
 
-    try {
-      const effectResult = effectFn(...args)
-      iteratee = effectStream.next(effectResult)
-    } catch (e) {
-      effectStream.throw(e)
-    }
+      try {
+        const effectResult = effectFn(...args)
+        iteratee = effectStream.next(effectResult)
+      } catch (e) {
+        iteratee = effectStream.throw(e)
+      }
+    } while (!iteratee.done)
   }
 
   return { run }
