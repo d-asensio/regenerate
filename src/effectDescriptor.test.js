@@ -15,7 +15,13 @@ describe('constructor', () => {
 
     const effectDescriptor = new EffectDescriptor('a-effect-id', effectArguments)
 
-    expect(effectDescriptor.args).toBe(effectArguments)
+    expect(effectDescriptor.args).toStrictEqual(effectArguments)
+  })
+
+  it('should construct an EffectDescriptor defaulting to empty array of arguments if no arguments are provided', () => {
+    const effectDescriptor = new EffectDescriptor('a-effect-id')
+
+    expect(effectDescriptor.args).toStrictEqual([])
   })
 })
 
@@ -23,7 +29,7 @@ class EffectDescriptor {
   #id;
   #args;
 
-  constructor (id, args) {
+  constructor (id, args = []) {
     this.#id = id
     this.#args = args
   }
