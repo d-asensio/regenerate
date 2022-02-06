@@ -1,24 +1,25 @@
 import { when } from 'jest-when'
 
 const effectRegistry = {
-  getFnByDescriptor: jest.fn()
+  getEffectById: jest.fn()
 }
 
 describe('run', () => {
   const effectsRunner = createEffectsRunner({ effectRegistry })
 
   it('should get the first effect function and execute it with the arguments provided by the effect descriptor', () => {
+    const firstEffectId = 'a-effect-id'
     const firstEffectArguments = [
       'an-argument',
       'another-argument'
     ]
     const firstEffectDescriptor = {
-      id: 'a-effect-id',
+      id: firstEffectId,
       args: firstEffectArguments
     }
     const firstEffectFn = jest.fn()
-    when(effectRegistry.getFnByDescriptor)
-      .calledWith(firstEffectDescriptor)
+    when(effectRegistry.getEffectById)
+      .calledWith(firstEffectId)
       .mockReturnValue(firstEffectFn)
     const effects = (function * () {
       yield firstEffectDescriptor
@@ -32,16 +33,17 @@ describe('run', () => {
   })
 
   it('should pass the result of the first effect back to the generator', () => {
-    const firstEffectResult = 'any-result'
+    const firstEffectId = 'a-effect-id'
     const firstEffectDescriptor = {
-      id: 'a-effect-id',
+      id: firstEffectId,
       args: []
     }
     const firstEffectFn = jest.fn()
+    const firstEffectResult = 'any-result'
     when(firstEffectFn)
       .mockReturnValue(firstEffectResult)
-    when(effectRegistry.getFnByDescriptor)
-      .calledWith(firstEffectDescriptor)
+    when(effectRegistry.getEffectById)
+      .calledWith(firstEffectId)
       .mockReturnValue(firstEffectFn)
     let result
     const effects = (function * () {
@@ -56,16 +58,17 @@ describe('run', () => {
   })
 
   it('should throw back to the generator any error produced in the effect function', () => {
+    const firstEffectId = 'a-effect-id'
     const firstEffectError = new Error()
     const firstEffectDescriptor = {
-      id: 'a-effect-id',
+      id: firstEffectId,
       args: []
     }
     const firstEffectFn = jest.fn(() => {
       throw firstEffectError
     })
-    when(effectRegistry.getFnByDescriptor)
-      .calledWith(firstEffectDescriptor)
+    when(effectRegistry.getEffectById)
+      .calledWith(firstEffectId)
       .mockReturnValue(firstEffectFn)
     let thrownError
     const effects = (function * () {
@@ -92,11 +95,11 @@ function createEffectsRunner (dependencies = {}) {
   function run (effectStream) {
     let iteratee = effectStream.next()
 
-    const effectDescriptor = iteratee.value
-    const effectFn = effectRegistry.getFnByDescriptor(effectDescriptor)
+    const { id, args } = iteratee.value
+    const effectFn = effectRegistry.getEffectById(id)
 
     try {
-      const effectResult = effectFn(...effectDescriptor.args)
+      const effectResult = effectFn(...args)
       iteratee = effectStream.next(effectResult)
     } catch (e) {
       effectStream.throw(e)
