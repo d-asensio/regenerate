@@ -12,30 +12,6 @@ const effectExecutor = {
 describe('run', () => {
   const effectsRunner = createEffectsRunner({ effectRegistry })
 
-  it('should get the first effect function and execute it with the arguments provided by the effect descriptor', () => {
-    const firstEffectId = 'a-effect-id'
-    const firstEffectArguments = [
-      'an-argument',
-      'another-argument'
-    ]
-    const firstEffectFn = jest.fn()
-    when(effectRegistry.getEffectById)
-      .calledWith(firstEffectId)
-      .mockReturnValue(firstEffectFn)
-    const effects = (function * () {
-      yield EffectDescriptor.fromObject({
-        id: firstEffectId,
-        args: firstEffectArguments
-      })
-    }())
-
-    effectsRunner.run(
-      effects
-    )
-
-    expect(firstEffectFn).toHaveBeenCalledWith(...firstEffectArguments)
-  })
-
   it('should pass the result of the first effect back to the generator', () => {
     const firstEffectId = 'a-effect-id'
     const firstEffectFn = jest.fn()
@@ -79,30 +55,6 @@ describe('run', () => {
     }
 
     expect(act).toThrowError()
-  })
-
-  it('should run multiple effects', () => {
-    const firstEffectId = 'a-effect-id'
-    const firstEffectFn = jest.fn()
-    const secondEffectId = 'another-effect-id'
-    const secondEffectFn = jest.fn()
-    when(effectRegistry.getEffectById)
-      .calledWith(firstEffectId)
-      .mockReturnValue(firstEffectFn)
-      .calledWith(secondEffectId)
-      .mockReturnValue(secondEffectFn)
-
-    const effects = (function * () {
-      yield EffectDescriptor.fromObject({ id: firstEffectId })
-      yield EffectDescriptor.fromObject({ id: secondEffectId })
-    }())
-
-    effectsRunner.run(
-      effects
-    )
-
-    expect(firstEffectFn).toHaveBeenCalled()
-    expect(secondEffectFn).toHaveBeenCalled()
   })
 
   it('should run multiple effects using the effect executor', () => {
