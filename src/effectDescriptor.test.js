@@ -25,9 +25,30 @@ describe('constructor', () => {
   })
 })
 
+describe('static fromObject', () => {
+  it('should create a EffectDescriptor from an object containing id and arguments', () => {
+    const descriptorObject = {
+      id: 'a-effect-id',
+      args: [
+        'an-argument',
+        'another-argument'
+      ]
+    }
+
+    const effectDescriptor = EffectDescriptor.fromObject(descriptorObject)
+
+    expect(effectDescriptor.id).toBe(descriptorObject.id)
+    expect(effectDescriptor.args).toBe(descriptorObject.args)
+  })
+})
+
 class EffectDescriptor {
   #id;
   #args;
+
+  static fromObject ({ id, args }) {
+    return new EffectDescriptor(id, args)
+  }
 
   constructor (id, args = []) {
     this.#id = id
