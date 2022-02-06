@@ -1,5 +1,6 @@
 import { when } from 'jest-when'
 import { EffectDescriptor } from './effectDescriptor'
+import { createEffectExecutor } from './effectExecutor'
 
 const effectRegistry = {
   getEffectById: jest.fn()
@@ -80,63 +81,6 @@ describe('run', () => {
     expect(effectExecutor.exec).toHaveBeenCalledWith(secondEffectDescriptor)
   })
 })
-
-describe('exec', () => {
-  const effectExecutor = createEffectExecutor({ effectRegistry })
-
-  it('should get an effect from the repository by id and execute it with the arguments provided by the descriptor', () => {
-    const effectId = 'a-effect-id'
-    const effectArguments = [
-      'an-argument',
-      'another-argument'
-    ]
-    const effectFn = jest.fn()
-    const effectDescriptor = EffectDescriptor.fromObject({
-      id: effectId,
-      args: effectArguments
-    })
-    when(effectRegistry.getEffectById)
-      .calledWith(effectId)
-      .mockReturnValue(effectFn)
-
-    effectExecutor.exec(effectDescriptor)
-
-    expect(effectFn).toHaveBeenCalledWith(...effectArguments)
-  })
-
-  it('should return the effect result', () => {
-    const effectId = 'a-effect-id'
-    const effectDescriptor = EffectDescriptor.fromObject({
-      id: effectId
-    })
-    const effectFn = jest.fn()
-    const effectResult = 'a-result'
-    when(effectFn)
-      .mockReturnValue(effectResult)
-    when(effectRegistry.getEffectById)
-      .calledWith(effectId)
-      .mockReturnValue(effectFn)
-
-    const result = effectExecutor.exec(effectDescriptor)
-
-    expect(result).toBe(effectResult)
-  })
-})
-
-function createEffectExecutor (dependencies = {}) {
-  const {
-    effectRegistry
-  } = dependencies
-
-  function exec (effectDescriptor) {
-    const { id, args } = effectDescriptor
-    const effectFn = effectRegistry.getEffectById(id)
-
-    return effectFn(...args)
-  }
-
-  return { exec }
-}
 
 function createEffectsRunner (dependencies = {}) {
   const {
