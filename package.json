@@ -49,6 +49,7 @@
     "yarn": "1.22.17"
   },
   "dependencies": {
+    "jest-matcher-utils": "^27.5.0",
     "lodash.isequal": "^4.5.0"
   }
 }

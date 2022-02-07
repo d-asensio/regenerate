@@ -1,36 +1,31 @@
-export function toGenerateEffects (receivedEffectStream, expectedEffectDescriptorsSequence) {
-  let iteratee = receivedEffectStream.next()
-  let iteration = 0
+import { matcherHint, diff } from 'jest-matcher-utils'
+import { runEffectStreamAgainstExecutionPlanTest } from '../../src/testHelpers/runEffectStreamAgainstExecutionPlanTest'
+import isEqual from 'lodash.isequal'
 
-  do {
-    const { value: effectDescriptor } = iteratee
+const failMessage = (expected, received) => () => `${matcherHint(
+  '.toGenerateEffects',
+  'received',
+  'expected'
+)}
 
-    const expectedEffectDescriptor = expectedEffectDescriptorsSequence[iteration]
+${diff(expected, received)}`
 
-    expect({
-      id: expectedEffectDescriptor.effect.id,
-      args: expectedEffectDescriptor.effect.args
-    }).toStrictEqual({
-      id: effectDescriptor.id,
-      args: effectDescriptor.args
-    })
+export function toGenerateEffects (effectStream, effectExecutionPlan) {
+  try {
+    const { expected, received } = runEffectStreamAgainstExecutionPlanTest(effectStream, effectExecutionPlan)
 
-    const { throws, returns } = expectedEffectDescriptor
-
-    if (throws && returns) {
+    if (!isEqual(expected, received)) {
       return {
-        message: () => 'An effect cannot throw and return at the same time, check your effect descriptors',
-        pass: false
+        pass: false,
+        message: failMessage(expected, received)
       }
     }
 
-    if (throws) {
-      receivedEffectStream.throw(throws)
+    return { pass: true }
+  } catch (e) {
+    return {
+      pass: false,
+      message: () => e.message
     }
-
-    iteratee = receivedEffectStream.next(returns)
-    iteration++
-  } while (!iteratee.done)
-
-  return { pass: true }
+  }
 }
