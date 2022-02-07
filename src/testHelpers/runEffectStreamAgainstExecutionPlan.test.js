@@ -169,6 +169,28 @@ describe('runEffectStreamAgainstExecutionPlan', () => {
 
     expect(act).toThrowWithMessage(Error, 'The execution plan cannot be larger than the effect stream')
   })
+
+  it('should not allow the effect stream to be larger than the execution plan', () => {
+    const firstEffectDescriptor = EffectDescriptor.fromObject({
+      id: 'a-effect-id'
+    })
+    const secondEffectDescriptor = EffectDescriptor.fromObject({
+      id: 'another-effect-id'
+    })
+    const effectStream = (function * () {
+      yield firstEffectDescriptor
+      yield secondEffectDescriptor
+    }())
+    const effectExecutionPlan = [
+      {
+        effect: firstEffectDescriptor
+      }
+    ]
+
+    const act = () => runEffectStreamAgainstExecutionPlanTest(effectStream, effectExecutionPlan)
+
+    expect(act).toThrowWithMessage(Error, 'The effect stream cannot be larger than the execution plan')
+  })
 })
 
 function runEffectStreamAgainstExecutionPlanTest (effectIterator, executionPlan) {
@@ -211,6 +233,10 @@ function runEffectStreamAgainstExecutionPlanTest (effectIterator, executionPlan)
 
   if (effectIteratee.done && !executionRecipeIteratee.done) {
     throw new Error('The execution plan cannot be larger than the effect stream')
+  }
+
+  if (!effectIteratee.done && executionRecipeIteratee.done) {
+    throw new Error('The effect stream cannot be larger than the execution plan')
   }
 
   return {
