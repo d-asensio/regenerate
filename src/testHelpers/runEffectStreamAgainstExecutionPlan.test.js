@@ -1,23 +1,29 @@
 import { EffectDescriptor } from '../effectDescriptor'
 
 describe('runEffectStreamAgainstExecutionPlan', () => {
-  it('should return equal expected and received arrays given an stream of effects and its matching execution plan', () => {
-    const firstEffectDescriptor = EffectDescriptor.fromObject({
-      id: 'a-effect-id'
+  it('should return an object having received descriptors from the effect stream and expected descriptors from the execution plan', () => {
+    const firstReceivedEffectDescriptor = EffectDescriptor.fromObject({
+      id: 'a-expected-effect-id'
     })
-    const secondEffectDescriptor = EffectDescriptor.fromObject({
-      id: 'another-effect-id'
+    const secondReceivedEffectDescriptor = EffectDescriptor.fromObject({
+      id: 'a-expected-effect-id'
+    })
+    const firstExpectedEffectDescriptor = EffectDescriptor.fromObject({
+      id: 'a-unexpected-effect-id'
+    })
+    const secondExpectedEffectDescriptor = EffectDescriptor.fromObject({
+      id: 'another-unexpected-effect-id'
     })
     const effectStream = (function * () {
-      yield firstEffectDescriptor
-      yield secondEffectDescriptor
+      yield firstReceivedEffectDescriptor
+      yield secondReceivedEffectDescriptor
     }())
     const effectExecutionPlan = [
       {
-        effect: firstEffectDescriptor
+        effect: firstExpectedEffectDescriptor
       },
       {
-        effect: secondEffectDescriptor
+        effect: secondExpectedEffectDescriptor
       }
     ]
 
@@ -25,12 +31,12 @@ describe('runEffectStreamAgainstExecutionPlan', () => {
 
     expect(result).toStrictEqual({
       expected: [
-        EffectDescriptor.toObject(firstEffectDescriptor),
-        EffectDescriptor.toObject(secondEffectDescriptor)
+        EffectDescriptor.toObject(firstExpectedEffectDescriptor),
+        EffectDescriptor.toObject(secondExpectedEffectDescriptor)
       ],
       received: [
-        EffectDescriptor.toObject(firstEffectDescriptor),
-        EffectDescriptor.toObject(secondEffectDescriptor)
+        EffectDescriptor.toObject(firstReceivedEffectDescriptor),
+        EffectDescriptor.toObject(secondReceivedEffectDescriptor)
       ]
     })
   })
