@@ -1,6 +1,7 @@
-import { createEffectExecutor } from './effectExecutor'
+import { createEffectExecutor, UnableToExecuteEffectError } from './effectExecutor'
 import { EffectDescriptor } from './effectDescriptor'
 import { when } from 'jest-when'
+import { NotRegisteredEffectError } from './effectRegistry'
 
 const effectRegistry = {
   getEffectById: jest.fn()
@@ -43,5 +44,21 @@ describe('exec', () => {
     const result = effectExecutor.exec(effectDescriptor)
 
     expect(result).toBe(effectResult)
+  })
+
+  it('should throw a UnableToExecuteEffectError in case the registry throws a NotRegisteredEffectError', () => {
+    const effectId = 'a-effect-id'
+    const effectDescriptor = EffectDescriptor.fromObject({
+      id: effectId
+    })
+    when(effectRegistry.getEffectById)
+      .calledWith(effectId)
+      .mockImplementationOnce(() => {
+        throw new NotRegisteredEffectError()
+      })
+
+    const act = () => effectExecutor.exec(effectDescriptor)
+
+    expect(act).toThrowWithMessage(UnableToExecuteEffectError, `The effect identified by "${effectId}" is not registered and thus not executed.`)
   })
 })

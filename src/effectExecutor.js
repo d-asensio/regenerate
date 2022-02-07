@@ -7,10 +7,24 @@ export function createEffectExecutor (dependencies = {}) {
 
   function exec (effectDescriptor) {
     const { id, args } = effectDescriptor
-    const effectFn = effectRegistry.getEffectById(id)
 
-    return effectFn(...args)
+    try {
+      const effectFn = effectRegistry.getEffectById(id)
+
+      return effectFn(...args)
+    } catch (e) {
+      throw new UnableToExecuteEffectError(
+        `The effect identified by "${id}" is not registered and thus not executed.`
+      )
+    }
   }
 
   return { exec }
+}
+
+export class UnableToExecuteEffectError extends Error {
+  constructor (message) {
+    super(message)
+    this.name = 'UnableToExecuteEffectError'
+  }
 }
