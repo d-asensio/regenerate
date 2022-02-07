@@ -21,16 +21,16 @@ it('should work', () => {
 it('should fail', () => {
   expect(
     incrementCounter({
-      offset: 2
+      offset: 1
     })
   ).toGenerateEffects([
     {
       effect: storeEffects.get('counter'),
-      returns: 2
+      returns: 1
     },
     {
       // The final state of the counter is 4, so the test fails
-      effect: storeEffects.set('counter', 3)
+      effect: storeEffects.set('counter', 8)
     }
   ])
 })

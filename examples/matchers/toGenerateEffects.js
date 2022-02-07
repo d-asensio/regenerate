@@ -7,7 +7,13 @@ export function toGenerateEffects (receivedEffectStream, expectedEffectDescripto
 
     const expectedEffectDescriptor = expectedEffectDescriptorsSequence[iteration]
 
-    expect(expectedEffectDescriptor.effect).toStrictEqual(effectDescriptor)
+    expect({
+      id: expectedEffectDescriptor.effect.id,
+      args: expectedEffectDescriptor.effect.args
+    }).toStrictEqual({
+      id: effectDescriptor.id,
+      args: effectDescriptor.args
+    })
 
     const { throws, returns } = expectedEffectDescriptor
 
