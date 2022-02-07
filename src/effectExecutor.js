@@ -1,4 +1,4 @@
-import { createEffectRegistry } from './effectRegistry'
+import { createEffectRegistry, NotRegisteredEffectError } from './effectRegistry'
 
 export function createEffectExecutor (dependencies = {}) {
   const {
@@ -13,9 +13,13 @@ export function createEffectExecutor (dependencies = {}) {
 
       return effectFn(...args)
     } catch (e) {
-      throw new UnableToExecuteEffectError(
-        `The effect identified by "${id}" is not registered and thus not executed.`
-      )
+      if (e instanceof NotRegisteredEffectError) {
+        throw new UnableToExecuteEffectError(
+          `The effect identified by "${id}" is not registered and thus not executed.`
+        )
+      }
+
+      throw e
     }
   }
 

@@ -46,6 +46,22 @@ describe('exec', () => {
     expect(result).toBe(effectResult)
   })
 
+  it('should re-throw any error that is produced in the effect function', () => {
+    const effectId = 'a-effect-id'
+    const effectDescriptor = EffectDescriptor.fromObject({
+      id: effectId
+    })
+    const errorMessage = 'any-error-message'
+    const effectFn = () => { throw new Error(errorMessage) }
+    when(effectRegistry.getEffectById)
+      .calledWith(effectId)
+      .mockReturnValue(effectFn)
+
+    const act = () => effectExecutor.exec(effectDescriptor)
+
+    expect(act).toThrowWithMessage(Error, errorMessage)
+  })
+
   it('should throw a UnableToExecuteEffectError in case the registry throws a NotRegisteredEffectError', () => {
     const effectId = 'a-effect-id'
     const effectDescriptor = EffectDescriptor.fromObject({
