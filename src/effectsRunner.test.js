@@ -79,28 +79,4 @@ describe('run', () => {
 
     expect(result).toEqual(firstEffectResult)
   })
-
-  it('should throw back to the generator any error produced in the effect function', () => {
-    const firstEffectId = 'a-effect-id'
-    const firstEffectError = new Error()
-    const firstEffectFn = jest.fn()
-    when(firstEffectFn)
-      .mockImplementation(() => {
-        throw firstEffectError
-      })
-    when(effectRegistry.getEffectById)
-      .calledWith(firstEffectId)
-      .mockReturnValue(firstEffectFn)
-    const effects = (function * () {
-      yield EffectDescriptor.fromObject({ id: firstEffectId })
-    }())
-
-    const act = () => {
-      effectsRunner.run(
-        effects
-      )
-    }
-
-    expect(act).toThrowError()
-  })
 })
