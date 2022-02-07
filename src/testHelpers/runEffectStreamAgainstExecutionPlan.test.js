@@ -1,29 +1,24 @@
+import isEqual from 'lodash.isequal'
 import { EffectDescriptor } from '../effectDescriptor'
 
 describe('runEffectStreamAgainstExecutionPlan', () => {
   it('should return an object having received descriptors from the effect stream and expected descriptors from the execution plan', () => {
-    const firstReceivedEffectDescriptor = EffectDescriptor.fromObject({
-      id: 'a-received-effect-id'
+    const firstEffectDescriptor = EffectDescriptor.fromObject({
+      id: 'a-effect-id'
     })
-    const secondReceivedEffectDescriptor = EffectDescriptor.fromObject({
-      id: 'a-received-effect-id'
-    })
-    const firstExpectedEffectDescriptor = EffectDescriptor.fromObject({
-      id: 'a-expected-effect-id'
-    })
-    const secondExpectedEffectDescriptor = EffectDescriptor.fromObject({
-      id: 'another-expected-effect-id'
+    const secondEffectDescriptor = EffectDescriptor.fromObject({
+      id: 'another-effect-id'
     })
     const effectStream = (function * () {
-      yield firstReceivedEffectDescriptor
-      yield secondReceivedEffectDescriptor
+      yield firstEffectDescriptor
+      yield secondEffectDescriptor
     }())
     const effectExecutionPlan = [
       {
-        effect: firstExpectedEffectDescriptor
+        effect: firstEffectDescriptor
       },
       {
-        effect: secondExpectedEffectDescriptor
+        effect: secondEffectDescriptor
       }
     ]
 
@@ -31,12 +26,61 @@ describe('runEffectStreamAgainstExecutionPlan', () => {
 
     expect(result).toStrictEqual({
       expected: [
-        EffectDescriptor.toObject(firstExpectedEffectDescriptor),
-        EffectDescriptor.toObject(secondExpectedEffectDescriptor)
+        EffectDescriptor.toObject(firstEffectDescriptor),
+        EffectDescriptor.toObject(secondEffectDescriptor)
       ],
       received: [
-        EffectDescriptor.toObject(firstReceivedEffectDescriptor),
-        EffectDescriptor.toObject(secondReceivedEffectDescriptor)
+        EffectDescriptor.toObject(firstEffectDescriptor),
+        EffectDescriptor.toObject(secondEffectDescriptor)
+      ]
+    })
+  })
+
+  it('should stop execution after finding mismatching descriptors in the effect stream and the execution plan (using deep equality)', () => {
+    const receivedEffectDescriptor = EffectDescriptor.fromObject({
+      id: 'a-received-effect-id',
+      args: [
+        {
+          a: {
+            deep: 'value'
+          }
+        }
+      ]
+    })
+    const expectedEffectDescriptor = EffectDescriptor.fromObject({
+      id: 'a-received-effect-id',
+      args: [
+        {
+          a: {
+            deep: 'different value'
+          }
+        }
+      ]
+    })
+    const unreachableEffectDescriptor = EffectDescriptor.fromObject({
+      id: 'a-unreacahble-effect-id'
+    })
+    const effectStream = (function * () {
+      yield receivedEffectDescriptor
+      yield unreachableEffectDescriptor
+    }())
+    const effectExecutionPlan = [
+      {
+        effect: expectedEffectDescriptor
+      },
+      {
+        effect: unreachableEffectDescriptor
+      }
+    ]
+
+    const result = runEffectStreamAgainstExecutionPlanTest(effectStream, effectExecutionPlan)
+
+    expect(result).toStrictEqual({
+      expected: [
+        EffectDescriptor.toObject(expectedEffectDescriptor)
+      ],
+      received: [
+        EffectDescriptor.toObject(receivedEffectDescriptor)
       ]
     })
   })
@@ -122,16 +166,17 @@ function runEffectStreamAgainstExecutionPlanTest (effectIterator, executionPlan)
       throw new Error('An effect recipe cannot contain both returns and throws values')
     }
 
-    received.push(
-      EffectDescriptor.toObject(receivedEffect)
-    )
-    expected.push(
-      EffectDescriptor.toObject(expectedEffect)
-    )
+    const receivedEffectObject = EffectDescriptor.toObject(receivedEffect)
+    const expectedEffectObject = EffectDescriptor.toObject(expectedEffect)
 
-    if (returns) {
-      effectIteratee = effectIterator.next(returns)
+    received.push(receivedEffectObject)
+    expected.push(expectedEffectObject)
+
+    if (!isEqual(receivedEffectObject, expectedEffectObject)) {
+      break
     }
+
+    effectIteratee = effectIterator.next(returns)
 
     if (throws) {
       effectIteratee = effectIterator.throw(throws)
