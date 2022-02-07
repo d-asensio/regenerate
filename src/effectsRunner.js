@@ -5,14 +5,14 @@ export function createEffectsRunner (dependencies = {}) {
     effectExecutor = defaultEffectExecutor
   } = dependencies
 
-  function run (effectStream) {
+  async function run (effectStream) {
     let iteratee = effectStream.next()
 
     do {
       const { value: effectDescriptor } = iteratee
 
       try {
-        const effectResult = effectExecutor.exec(effectDescriptor)
+        const effectResult = await effectExecutor.exec(effectDescriptor)
         iteratee = effectStream.next(effectResult)
       } catch (e) {
         if (e instanceof UnableToExecuteEffectError) {

@@ -10,7 +10,7 @@ const effectExecutor = {
 describe('run', () => {
   const effectsRunner = createEffectsRunner({ effectExecutor })
 
-  it('should run multiple effects using the effect executor', () => {
+  it('should run multiple effects using the effect executor', async () => {
     const firstEffectDescriptor = EffectDescriptor.fromObject({
       id: 'a-effect-id'
     })
@@ -23,7 +23,7 @@ describe('run', () => {
       yield secondEffectDescriptor
     }())
 
-    effectsRunner.run(
+    await effectsRunner.run(
       effects
     )
 
@@ -31,67 +31,59 @@ describe('run', () => {
     expect(effectExecutor.exec).toHaveBeenCalledWith(secondEffectDescriptor)
   })
 
-  it('should pass the result of the effect executor back to the generator', () => {
+  it('should pass the result of the effect executor back to the generator', async () => {
     const effectDescriptor = EffectDescriptor.fromObject({
       id: 'a-effect-id'
     })
     const effectResult = 'a-result'
     when(effectExecutor.exec)
       .calledWith(effectDescriptor)
-      .mockReturnValue(effectResult)
+      .mockResolvedValue(effectResult)
     let executionResult
     const effects = (function * () {
       executionResult = yield effectDescriptor
     }())
 
-    effectsRunner.run(
+    await effectsRunner.run(
       effects
     )
 
     expect(executionResult).toEqual(effectResult)
   })
 
-  it('should throw a InvalidEffectStreamError if the effect executor throws a UnableToExecuteEffectError', () => {
+  it('should throw a InvalidEffectStreamError if the effect executor throws a UnableToExecuteEffectError', async () => {
     const effectDescriptor = EffectDescriptor.fromObject({
       id: 'a-effect-id'
     })
     when(effectExecutor.exec)
       .calledWith(effectDescriptor)
-      .mockImplementationOnce(() => {
+      .mockImplementationOnce(async () => {
         throw new UnableToExecuteEffectError()
       })
     const effects = (function * () {
       yield effectDescriptor
     }())
 
-    const act = () => {
-      effectsRunner.run(
-        effects
-      )
-    }
+    const act = async () => effectsRunner.run(effects)
 
-    expect(act).toThrowWithMessage(InvalidEffectStreamError, 'The effect stream you are attempting to execute is invalid, please check your generator function.')
+    await expect(act).rejects.toThrowWithMessage(InvalidEffectStreamError, 'The effect stream you are attempting to execute is invalid, please check your generator function.')
   })
 
-  it('should throw back to the generator any error produced in the effect executor', () => {
+  it('should throw back to the generator any error produced in the effect executor', async () => {
     const effectDescriptor = EffectDescriptor.fromObject({
       id: 'a-effect-id'
     })
     when(effectExecutor.exec)
       .calledWith(effectDescriptor)
-      .mockImplementationOnce(() => {
+      .mockImplementationOnce(async () => {
         throw new Error()
       })
     const effects = (function * () {
       yield effectDescriptor
     }())
 
-    const act = () => {
-      effectsRunner.run(
-        effects
-      )
-    }
+    const act = async () => effectsRunner.run(effects)
 
-    expect(act).toThrowError()
+    await expect(act).rejects.toThrowError()
   })
 })
