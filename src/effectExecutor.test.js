@@ -34,10 +34,8 @@ describe('exec', () => {
     const effectDescriptor = EffectDescriptor.fromObject({
       id: effectId
     })
-    const effectFn = jest.fn()
     const effectResult = 'a-result'
-    when(effectFn)
-      .mockReturnValue(effectResult)
+    const effectFn = () => effectResult
     when(effectRegistry.getEffectById)
       .calledWith(effectId)
       .mockReturnValue(effectFn)
