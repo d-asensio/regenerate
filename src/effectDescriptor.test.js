@@ -67,3 +67,17 @@ describe('static isValid', () => {
     expect(isValid).toBeFalse()
   })
 })
+
+describe('static toObject', () => {
+  it('should transform a effect descriptor without arguments to an object', () => {
+    const effectId = 'an-effect-id'
+    const effectDescriptor = new EffectDescriptor('an-effect-id')
+
+    const descriptorObject = EffectDescriptor.toObject(effectDescriptor)
+
+    expect(descriptorObject).toStrictEqual({
+      id: effectId,
+      args: []
+    })
+  })
+})

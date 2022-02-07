@@ -13,6 +13,13 @@ export class EffectDescriptor {
     )
   }
 
+  static toObject ({ id, args }) {
+    return {
+      id,
+      args
+    }
+  }
+
   static #isValidInstance (effectDescriptor) {
     return effectDescriptor instanceof EffectDescriptor
   }
