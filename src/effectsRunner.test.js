@@ -13,6 +13,52 @@ const effectExecutor = {
 describe('run', () => {
   const effectsRunner = createEffectsRunner({ effectRegistry })
 
+  it('should run multiple effects using the effect executor', () => {
+    const effectsRunner = createEffectsRunner({ effectExecutor })
+
+    const firstEffectDescriptor = EffectDescriptor.fromObject({
+      id: 'a-effect-id'
+    })
+    const secondEffectDescriptor = EffectDescriptor.fromObject({
+      id: 'another-effect-id'
+    })
+
+    const effects = (function * () {
+      yield firstEffectDescriptor
+      yield secondEffectDescriptor
+    }())
+
+    effectsRunner.run(
+      effects
+    )
+
+    expect(effectExecutor.exec).toHaveBeenCalledWith(firstEffectDescriptor)
+    expect(effectExecutor.exec).toHaveBeenCalledWith(secondEffectDescriptor)
+  })
+
+  it('should throw back to the generator any error produced in the effect executor', () => {
+    const effectsRunner = createEffectsRunner({ effectExecutor })
+    const effectDescriptor = EffectDescriptor.fromObject({
+      id: 'a-effect-id'
+    })
+    when(effectExecutor.exec)
+      .calledWith(effectDescriptor)
+      .mockImplementationOnce(() => {
+        throw new Error()
+      })
+    const effects = (function * () {
+      yield effectDescriptor
+    }())
+
+    const act = () => {
+      effectsRunner.run(
+        effects
+      )
+    }
+
+    expect(act).toThrowError()
+  })
+
   it('should pass the result of the first effect back to the generator', () => {
     const firstEffectId = 'a-effect-id'
     const firstEffectFn = jest.fn()
@@ -56,28 +102,5 @@ describe('run', () => {
     }
 
     expect(act).toThrowError()
-  })
-
-  it('should run multiple effects using the effect executor', () => {
-    const effectsRunner = createEffectsRunner({ effectExecutor })
-
-    const firstEffectDescriptor = EffectDescriptor.fromObject({
-      id: 'a-effect-id'
-    })
-    const secondEffectDescriptor = EffectDescriptor.fromObject({
-      id: 'another-effect-id'
-    })
-
-    const effects = (function * () {
-      yield firstEffectDescriptor
-      yield secondEffectDescriptor
-    }())
-
-    effectsRunner.run(
-      effects
-    )
-
-    expect(effectExecutor.exec).toHaveBeenCalledWith(firstEffectDescriptor)
-    expect(effectExecutor.exec).toHaveBeenCalledWith(secondEffectDescriptor)
   })
 })
