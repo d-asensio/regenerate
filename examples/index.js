@@ -6,18 +6,20 @@ import { writeErrorToStore } from './services/writeErrorToStore'
 // Initialize store
 store.set('counter', 1)
 
-// Example 1 getting and retrieving from store
-effectsRunner.run(
-  incrementCounter({ offset: 2 })
-)
+;(async function () {
+  // Example 1 getting and retrieving from store
+  await effectsRunner.run(
+    incrementCounter({ offset: 2 })
+  )
 
-console.log('Counter value:', store.get('counter'))
+  console.log('Counter value:', store.get('counter'))
 
-// Example 2 reacting to errors
-effectsRunner.run(
-  writeErrorToStore()
-)
+  // Example 2 reacting to errors
+  await effectsRunner.run(
+    writeErrorToStore()
+  )
 
-console.log('Counter value:', store.get('errorMessage'))
+  console.log('Counter value:', store.get('errorMessage'))
 
-// Example 3 async operations (TBD)
+  // Example 3 async operations (TBD)
+})()
