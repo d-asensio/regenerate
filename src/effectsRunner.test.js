@@ -7,9 +7,9 @@ const effectExecutor = {
 }
 
 describe('run', () => {
-  it('should run multiple effects using the effect executor', () => {
-    const effectsRunner = createEffectsRunner({ effectExecutor })
+  const effectsRunner = createEffectsRunner({ effectExecutor })
 
+  it('should run multiple effects using the effect executor', () => {
     const firstEffectDescriptor = EffectDescriptor.fromObject({
       id: 'a-effect-id'
     })
@@ -31,8 +31,6 @@ describe('run', () => {
   })
 
   it('should pass the result of the effect executor back to the generator', () => {
-    const effectsRunner = createEffectsRunner({ effectExecutor })
-
     const effectDescriptor = EffectDescriptor.fromObject({
       id: 'a-effect-id'
     })
@@ -53,7 +51,6 @@ describe('run', () => {
   })
 
   it('should throw back to the generator any error produced in the effect executor', () => {
-    const effectsRunner = createEffectsRunner({ effectExecutor })
     const effectDescriptor = EffectDescriptor.fromObject({
       id: 'a-effect-id'
     })

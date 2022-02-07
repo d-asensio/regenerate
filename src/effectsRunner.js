@@ -2,10 +2,7 @@ import { createEffectExecutor } from './effectExecutor'
 
 export function createEffectsRunner (dependencies = {}) {
   const {
-    effectRegistry,
-    effectExecutor = createEffectExecutor({
-      effectRegistry
-    })
+    effectExecutor = createEffectExecutor()
   } = dependencies
 
   function run (effectStream) {
