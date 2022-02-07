@@ -1,6 +1,8 @@
+import { createEffectRegistry } from './effectRegistry'
+
 export function createEffectExecutor (dependencies = {}) {
   const {
-    effectRegistry
+    effectRegistry = createEffectRegistry()
   } = dependencies
 
   function exec (effectDescriptor) {
