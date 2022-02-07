@@ -61,6 +61,26 @@ describe('runEffectStreamAgainstExecutionPlan', () => {
 
     expect(receivedReturnValue).toBe(expectedReturnValue)
   })
+
+  it('should throw back to the generator errors described in the execution plan', () => {
+    const effectDescriptor = EffectDescriptor.fromObject({
+      id: 'a-effect-id'
+    })
+    const expectedError = new Error()
+    const effectStream = (function * () {
+      yield effectDescriptor
+    }())
+    const effectExecutionPlan = [
+      {
+        effect: effectDescriptor,
+        throws: expectedError
+      }
+    ]
+
+    const act = () => runEffectStreamAgainstExecutionPlanTest(effectStream, effectExecutionPlan)
+
+    expect(act).toThrow(expectedError)
+  })
 })
 
 function runEffectStreamAgainstExecutionPlanTest (effectIterator, executionPlan) {
@@ -76,7 +96,7 @@ function runEffectStreamAgainstExecutionPlanTest (effectIterator, executionPlan)
     const { value: receivedEffect } = effectIteratee
     const { value: executionRecipe } = executionRecipeIteratee
 
-    const { effect: expectedEffect, returns } = executionRecipe
+    const { effect: expectedEffect, returns, throws } = executionRecipe
 
     received.push(
       EffectDescriptor.toObject(receivedEffect)
@@ -85,7 +105,14 @@ function runEffectStreamAgainstExecutionPlanTest (effectIterator, executionPlan)
       EffectDescriptor.toObject(expectedEffect)
     )
 
-    effectIteratee = effectIterator.next(returns)
+    if (returns) {
+      effectIteratee = effectIterator.next(returns)
+    }
+
+    if (throws) {
+      effectIteratee = effectIterator.throw(throws)
+    }
+
     executionRecipeIteratee = executionPlanIterator.next()
   } while (!effectIteratee.done && !executionRecipeIteratee.done)
 
