@@ -1,4 +1,4 @@
-import { runEffects } from './runEffectsDraft'
+import effectsRunner from '../src/effectsRunner'
 import { store } from './effects/store'
 import { incrementCounter } from './services/incrementCounter'
 import { writeErrorToStore } from './services/writeErrorToStore'
@@ -7,14 +7,14 @@ import { writeErrorToStore } from './services/writeErrorToStore'
 store.set('counter', 1)
 
 // Example 1 getting and retrieving from store
-runEffects(
+effectsRunner.run(
   incrementCounter({ offset: 2 })
 )
 
 console.log('Counter value:', store.get('counter'))
 
 // Example 2 reacting to errors
-runEffects(
+effectsRunner.run(
   writeErrorToStore()
 )
 

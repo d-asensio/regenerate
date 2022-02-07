@@ -1,4 +1,4 @@
-import effectsRegistry from '../effectsRegistryDraft'
+import effectsRegistry from '../../src/effectRegistry'
 
 export default {
   throwErrorSometimes: effectsRegistry.create(
