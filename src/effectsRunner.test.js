@@ -1,6 +1,7 @@
 import { when } from 'jest-when'
 import { EffectDescriptor } from './effectDescriptor'
-import { createEffectsRunner } from './effectsRunner'
+import { createEffectsRunner, InvalidEffectStreamError } from './effectsRunner'
+import { UnableToExecuteEffectError } from './effectExecutor'
 
 const effectExecutor = {
   exec: jest.fn()
@@ -48,6 +49,28 @@ describe('run', () => {
     )
 
     expect(executionResult).toEqual(effectResult)
+  })
+
+  it('should throw a InvalidEffectStreamError if the effect executor throws a UnableToExecuteEffectError', () => {
+    const effectDescriptor = EffectDescriptor.fromObject({
+      id: 'a-effect-id'
+    })
+    when(effectExecutor.exec)
+      .calledWith(effectDescriptor)
+      .mockImplementationOnce(() => {
+        throw new UnableToExecuteEffectError()
+      })
+    const effects = (function * () {
+      yield effectDescriptor
+    }())
+
+    const act = () => {
+      effectsRunner.run(
+        effects
+      )
+    }
+
+    expect(act).toThrowWithMessage(InvalidEffectStreamError, 'The effect stream you are attempting to execute is invalid, please check your generator function.')
   })
 
   it('should throw back to the generator any error produced in the effect executor', () => {
