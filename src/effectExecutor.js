@@ -1,8 +1,8 @@
-import { createEffectRegistry, NotRegisteredEffectError } from './effectRegistry'
+import defaultEffectRegistry, { NotRegisteredEffectError } from './effectRegistry'
 
 export function createEffectExecutor (dependencies = {}) {
   const {
-    effectRegistry = createEffectRegistry()
+    effectRegistry = defaultEffectRegistry
   } = dependencies
 
   function exec (effectDescriptor) {
@@ -32,3 +32,5 @@ export class UnableToExecuteEffectError extends Error {
     this.name = 'UnableToExecuteEffectError'
   }
 }
+
+export default createEffectExecutor()

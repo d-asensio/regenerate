@@ -40,3 +40,5 @@ export class NotRegisteredEffectError extends Error {
     this.name = 'NotRegisteredEffectError'
   }
 }
+
+export default createEffectRegistry()

@@ -1,8 +1,8 @@
-import { createEffectExecutor } from './effectExecutor'
+import defaultEffectExecutor from './effectExecutor'
 
 export function createEffectsRunner (dependencies = {}) {
   const {
-    effectExecutor = createEffectExecutor()
+    effectExecutor = defaultEffectExecutor
   } = dependencies
 
   function run (effectStream) {
@@ -22,3 +22,5 @@ export function createEffectsRunner (dependencies = {}) {
 
   return { run }
 }
+
+export default createEffectsRunner()
