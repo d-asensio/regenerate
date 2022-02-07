@@ -1,5 +1,5 @@
 import * as jestExtendedMatchers from 'jest-extended';
-import { toGenerateEffects } from '../src/matchers/toGenerateEffects'
+import { toGenerateEffects } from '../examples/matchers/toGenerateEffects'
 
 expect.extend({
   ...jestExtendedMatchers,
