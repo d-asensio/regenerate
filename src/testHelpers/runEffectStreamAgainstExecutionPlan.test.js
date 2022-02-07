@@ -81,6 +81,26 @@ describe('runEffectStreamAgainstExecutionPlan', () => {
 
     expect(act).toThrow(expectedError)
   })
+
+  it('should not allow execution plan recipes having both returns and throws values', () => {
+    const effectDescriptor = EffectDescriptor.fromObject({
+      id: 'a-effect-id'
+    })
+    const effectStream = (function * () {
+      yield effectDescriptor
+    }())
+    const effectExecutionPlan = [
+      {
+        effect: effectDescriptor,
+        returns: 'any-value',
+        throws: new Error()
+      }
+    ]
+
+    const act = () => runEffectStreamAgainstExecutionPlanTest(effectStream, effectExecutionPlan)
+
+    expect(act).toThrowWithMessage(Error, 'An effect recipe cannot contain both returns and throws values')
+  })
 })
 
 function runEffectStreamAgainstExecutionPlanTest (effectIterator, executionPlan) {
@@ -97,6 +117,10 @@ function runEffectStreamAgainstExecutionPlanTest (effectIterator, executionPlan)
     const { value: executionRecipe } = executionRecipeIteratee
 
     const { effect: expectedEffect, returns, throws } = executionRecipe
+
+    if (returns && throws) {
+      throw new Error('An effect recipe cannot contain both returns and throws values')
+    }
 
     received.push(
       EffectDescriptor.toObject(receivedEffect)
