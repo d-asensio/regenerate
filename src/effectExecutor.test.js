@@ -10,7 +10,7 @@ const effectRegistry = {
 describe('exec', () => {
   const effectExecutor = createEffectExecutor({ effectRegistry })
 
-  it('should get an effect from the repository by id and execute it with the arguments provided by the descriptor', () => {
+  it('should get an effect from the repository by id and execute it with the arguments provided by the descriptor', async () => {
     const effectId = 'a-effect-id'
     const effectArguments = [
       'an-argument',
@@ -25,44 +25,44 @@ describe('exec', () => {
       .calledWith(effectId)
       .mockReturnValue(effectFn)
 
-    effectExecutor.exec(effectDescriptor)
+    await effectExecutor.exec(effectDescriptor)
 
     expect(effectFn).toHaveBeenCalledWith(...effectArguments)
   })
 
-  it('should return the effect result', () => {
+  it('should return the effect result', async () => {
     const effectId = 'a-effect-id'
     const effectDescriptor = EffectDescriptor.fromObject({
       id: effectId
     })
     const effectResult = 'a-result'
-    const effectFn = () => effectResult
+    const effectFn = async () => effectResult
     when(effectRegistry.getEffectById)
       .calledWith(effectId)
       .mockReturnValue(effectFn)
 
-    const result = effectExecutor.exec(effectDescriptor)
+    const result = await effectExecutor.exec(effectDescriptor)
 
     expect(result).toBe(effectResult)
   })
 
-  it('should re-throw any error that is produced in the effect function', () => {
+  it('should re-throw any error that is produced in the effect function', async () => {
     const effectId = 'a-effect-id'
     const effectDescriptor = EffectDescriptor.fromObject({
       id: effectId
     })
     const errorMessage = 'any-error-message'
-    const effectFn = () => { throw new Error(errorMessage) }
+    const effectFn = async () => { throw new Error(errorMessage) }
     when(effectRegistry.getEffectById)
       .calledWith(effectId)
       .mockReturnValue(effectFn)
 
-    const act = () => effectExecutor.exec(effectDescriptor)
+    const act = async () => effectExecutor.exec(effectDescriptor)
 
-    expect(act).toThrowWithMessage(Error, errorMessage)
+    await expect(act).rejects.toThrowWithMessage(Error, errorMessage)
   })
 
-  it('should throw a UnableToExecuteEffectError in case the registry throws a NotRegisteredEffectError', () => {
+  it('should throw a UnableToExecuteEffectError in case the registry throws a NotRegisteredEffectError', async () => {
     const effectId = 'a-effect-id'
     const effectDescriptor = EffectDescriptor.fromObject({
       id: effectId
@@ -73,8 +73,8 @@ describe('exec', () => {
         throw new NotRegisteredEffectError()
       })
 
-    const act = () => effectExecutor.exec(effectDescriptor)
+    const act = async () => effectExecutor.exec(effectDescriptor)
 
-    expect(act).toThrowWithMessage(UnableToExecuteEffectError, `The effect identified by "${effectId}" is not registered and thus not executed.`)
+    await expect(act).rejects.toThrowWithMessage(UnableToExecuteEffectError, `The effect identified by "${effectId}" is not registered and thus not executed.`)
   })
 })

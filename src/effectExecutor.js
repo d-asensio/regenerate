@@ -5,7 +5,7 @@ export function createEffectExecutor (dependencies = {}) {
     effectRegistry = defaultEffectRegistry
   } = dependencies
 
-  function exec (effectDescriptor) {
+  async function exec (effectDescriptor) {
     const { id, args } = effectDescriptor
 
     try {
