@@ -2,17 +2,11 @@ import { when } from 'jest-when'
 import { EffectDescriptor } from './effectDescriptor'
 import { createEffectsRunner } from './effectsRunner'
 
-const effectRegistry = {
-  getEffectById: jest.fn()
-}
-
 const effectExecutor = {
   exec: jest.fn()
 }
 
 describe('run', () => {
-  const effectsRunner = createEffectsRunner({ effectRegistry })
-
   it('should run multiple effects using the effect executor', () => {
     const effectsRunner = createEffectsRunner({ effectExecutor })
 
@@ -79,26 +73,5 @@ describe('run', () => {
     }
 
     expect(act).toThrowError()
-  })
-
-  it('should pass the result of the first effect back to the generator', () => {
-    const firstEffectId = 'a-effect-id'
-    const firstEffectFn = jest.fn()
-    const firstEffectResult = 'any-result'
-    when(firstEffectFn)
-      .mockReturnValue(firstEffectResult)
-    when(effectRegistry.getEffectById)
-      .calledWith(firstEffectId)
-      .mockReturnValue(firstEffectFn)
-    let result
-    const effects = (function * () {
-      result = yield EffectDescriptor.fromObject({ id: firstEffectId })
-    }())
-
-    effectsRunner.run(
-      effects
-    )
-
-    expect(result).toEqual(firstEffectResult)
   })
 })
