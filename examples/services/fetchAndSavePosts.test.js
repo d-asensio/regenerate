@@ -24,10 +24,7 @@ describe('fetchAndSavePosts', () => {
       })
     ).toGenerateEffects([
       {
-        effect: http.fetchJSON({
-          url: 'https://jsonplaceholder.typicode.com/posts',
-          method: 'GET'
-        }),
+        effect: http.fetchJson('https://jsonplaceholder.typicode.com/posts'),
         returns: posts
       },
       {
@@ -54,10 +51,7 @@ describe('fetchAndSavePosts', () => {
       })
     ).toGenerateEffects([
       {
-        effect: http.fetchJSON({
-          url: 'https://jsonplaceholder.typicode.com/posts',
-          method: 'GET'
-        }),
+        effect: http.fetchJson('https://jsonplaceholder.typicode.com/posts'),
         throws: new Error()
       },
       {

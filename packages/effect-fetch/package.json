@@ -1,0 +1,10 @@
+{
+  "name": "@regenerate/effect-fetch",
+  "version": "1.0.0",
+  "description": "Regenerate effect to use fetch-like requests",
+  "main": "src/index.js",
+  "repository": "https://github.com/d-asensio/regenerate.git",
+  "author": "David Asensio Cañas <david.asensio@icloud.com>",
+  "license": "MIT",
+  "private": false
+}
