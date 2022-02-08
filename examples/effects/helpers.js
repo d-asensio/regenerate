@@ -1,7 +1,7 @@
-import { effectRegistry } from '@regenerate/core'
+import { createEffect } from '@regenerate/core'
 
 export default {
-  throwErrorSometimes: effectRegistry.create(
+  throwErrorSometimes: createEffect(
     () => {
       if (Math.random() > 0.5) throw new Error('Random error')
     }

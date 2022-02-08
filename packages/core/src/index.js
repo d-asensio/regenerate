@@ -1,3 +1,6 @@
+import effectRegistry from './effectRegistry'
+import effectsRunner from './effectsRunner'
+
 export * from './effectDescriptor'
-export { default as effectRegistry } from './effectRegistry'
-export { default as effectsRunner } from './effectsRunner'
+export const createEffect = effectRegistry.create
+export const run = effectsRunner.run

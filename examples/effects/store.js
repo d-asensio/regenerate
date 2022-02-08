@@ -1,11 +1,11 @@
-import { effectRegistry } from '@regenerate/core'
+import { createEffect } from '@regenerate/core'
 
 export const store = new Map()
 
 export default {
-  get: effectRegistry.create(store.get.bind(store)),
-  set: effectRegistry.create(store.set.bind(store)),
-  select: effectRegistry.create((selector, ...args) => {
+  get: createEffect(store.get.bind(store)),
+  set: createEffect(store.set.bind(store)),
+  select: createEffect((selector, ...args) => {
     const state = Array.from(store).reduce((obj, [key, value]) => (
       Object.assign(obj, { [key]: value })
     ), {})
