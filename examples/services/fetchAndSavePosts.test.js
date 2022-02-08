@@ -1,7 +1,7 @@
+import { sleep } from '@regenerate/effect-sleep'
 import http from '../effects/http'
 import store from '../effects/store'
 import { fetchAndSavePosts } from './fetchAndSavePosts'
-import sleep from '../effects/sleep'
 import { getUserSelector } from '../selectors/user'
 
 describe('fetchAndSavePosts', () => {
