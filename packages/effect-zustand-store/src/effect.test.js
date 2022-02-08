@@ -1,4 +1,5 @@
 import { when } from 'jest-when'
+import { createZustandEffect } from './effect'
 
 const store = {
   getState: jest.fn(),
@@ -6,7 +7,7 @@ const store = {
 }
 
 describe('get', () => {
-  const effect = createEffect({ store })
+  const effect = createZustandEffect({ store })
 
   it('should get the state from the store', () => {
     const state = {
@@ -22,7 +23,7 @@ describe('get', () => {
 })
 
 describe('set', () => {
-  const effect = createEffect({ store })
+  const effect = createZustandEffect({ store })
 
   it('should set the state to the store', () => {
     const state = {
@@ -36,7 +37,7 @@ describe('set', () => {
 })
 
 describe('select', () => {
-  const effect = createEffect({ store })
+  const effect = createZustandEffect({ store })
 
   it('should select state from the store', () => {
     const selectorFn = jest.fn()
@@ -68,29 +69,3 @@ describe('select', () => {
     expect(selectorFn).toHaveBeenCalledWith(state, ...additionalArgs)
   })
 })
-
-function createEffect (dependencies = {}) {
-  const {
-    store
-  } = dependencies
-
-  function get () {
-    return store.getState()
-  }
-
-  function set (state) {
-    store.setState(state)
-  }
-
-  function select (selectorFn, ...args) {
-    const state = store.getState()
-
-    selectorFn(state, ...args)
-  }
-
-  return {
-    get,
-    set,
-    select
-  }
-}

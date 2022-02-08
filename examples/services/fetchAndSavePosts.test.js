@@ -42,7 +42,7 @@ describe('fetchAndSavePosts', () => {
         effect: sleep.milliseconds(3000)
       },
       {
-        effect: store.set('posts', posts)
+        effect: store.set({ posts })
       }
     ])
   })
@@ -61,7 +61,7 @@ describe('fetchAndSavePosts', () => {
         throws: new Error()
       },
       {
-        effect: store.set('posts', [])
+        effect: store.set({ posts: [] })
       }
     ])
   })

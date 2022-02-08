@@ -14,8 +14,8 @@ export function * fetchAndSavePosts ({ path, userId }) {
 
     yield sleep.milliseconds(user.wait)
 
-    yield store.set('posts', posts)
+    yield store.set({ posts })
   } catch {
-    yield store.set('posts', [])
+    yield store.set({ posts: [] })
   }
 }

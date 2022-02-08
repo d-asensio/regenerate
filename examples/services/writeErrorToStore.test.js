@@ -12,7 +12,7 @@ it('should work (error path)', () => {
       throws: new Error()
     },
     {
-      effect: storeEffects.set('errorMessage', 'Oops! An error was found :(')
+      effect: storeEffects.set({ errorMessage: 'Oops! An error was found :(' })
     }
   ])
 })
@@ -25,7 +25,7 @@ it('should work (success path)', () => {
       effect: helperEffects.throwErrorSometimes()
     },
     {
-      effect: storeEffects.set('errorMessage', 'No error :)')
+      effect: storeEffects.set({ errorMessage: 'No error :)' })
     }
   ])
 })

@@ -9,28 +9,13 @@ it('should work', () => {
     })
   ).toGenerateEffects([
     {
-      effect: storeEffects.get('counter'),
-      returns: 1
+      effect: storeEffects.get(),
+      returns: {
+        counter: 1
+      }
     },
     {
-      effect: storeEffects.set('counter', 3)
-    }
-  ])
-})
-
-it('should fail', () => {
-  expect(
-    incrementCounter({
-      offset: 1
-    })
-  ).toGenerateEffects([
-    {
-      effect: storeEffects.get('counter'),
-      returns: 1
-    },
-    {
-      // The final state of the counter is 4, so the test fails
-      effect: storeEffects.set('counter', 8)
+      effect: storeEffects.set({ counter: 3 })
     }
   ])
 })

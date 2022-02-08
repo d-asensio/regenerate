@@ -6,12 +6,14 @@ import { writeErrorToStore } from './services/writeErrorToStore'
 import { fetchAndSavePosts } from './services/fetchAndSavePosts'
 
 // Initialize store
-store.set('counter', 1)
-store.set('users', {
-  'user-1': {
-    id: 'user-1',
-    name: 'Pepito',
-    wait: 1000
+store.setState({
+  counter: 1,
+  users: {
+    'user-1': {
+      id: 'user-1',
+      name: 'Pepito',
+      wait: 1000
+    }
   }
 })
 
@@ -21,19 +23,19 @@ store.set('users', {
     incrementCounter({ offset: 2 })
   )
 
-  console.log('Counter value:', store.get('counter'))
+  console.log(store.getState())
 
   // Example 2 reacting to errors
   await run(
     writeErrorToStore()
   )
 
-  console.log('Counter value:', store.get('errorMessage'))
+  console.log(store.getState())
 
   // Example 3 async operations (TBD)
   await run(
     fetchAndSavePosts({ path: '/posts', userId: 'user-1' })
   )
 
-  console.log('Posts', store.get('posts'))
+  console.log(store.getState())
 })()
