@@ -8,7 +8,7 @@ const store = {
 describe('get', () => {
   const effect = createEffect({ store })
 
-  it('should work', () => {
+  it('should get the state from the store', () => {
     const state = {
       aPiece: 'of state'
     }
@@ -21,6 +21,20 @@ describe('get', () => {
   })
 })
 
+describe('set', () => {
+  const effect = createEffect({ store })
+
+  it('should set the state to the store', () => {
+    const state = {
+      aPiece: 'of state'
+    }
+
+    effect.set(state)
+
+    expect(store.setState).toHaveBeenCalledWith(state)
+  })
+})
+
 function createEffect (dependencies = {}) {
   const {
     store
@@ -30,8 +44,8 @@ function createEffect (dependencies = {}) {
     return store.getState()
   }
 
-  function set () {
-
+  function set (state) {
+    store.setState(state)
   }
 
   function select () {
