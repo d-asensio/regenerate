@@ -38,7 +38,7 @@ describe('set', () => {
 describe('select', () => {
   const effect = createEffect({ store })
 
-  it('should set the state to the store', () => {
+  it('should select state from the store', () => {
     const selectorFn = jest.fn()
     const state = {
       aPiece: 'of state'
@@ -49,6 +49,23 @@ describe('select', () => {
     effect.select(selectorFn)
 
     expect(selectorFn).toHaveBeenCalledWith(state)
+  })
+
+  it('should select state from the store, using a selector with additional arguments', () => {
+    const selectorFn = jest.fn()
+    const state = {
+      aPiece: 'of state'
+    }
+    const additionalArgs = [
+      'an-argument',
+      'another-argument'
+    ]
+    when(store.getState)
+      .mockReturnValue(state)
+
+    effect.select(selectorFn, ...additionalArgs)
+
+    expect(selectorFn).toHaveBeenCalledWith(state, ...additionalArgs)
   })
 })
 
@@ -65,10 +82,10 @@ function createEffect (dependencies = {}) {
     store.setState(state)
   }
 
-  function select (selectorFn) {
+  function select (selectorFn, ...args) {
     const state = store.getState()
 
-    selectorFn(state)
+    selectorFn(state, ...args)
   }
 
   return {
