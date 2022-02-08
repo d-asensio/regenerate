@@ -68,4 +68,15 @@ describe('select', () => {
 
     expect(selectorFn).toHaveBeenCalledWith(state, ...additionalArgs)
   })
+
+  it('should return the selected value', () => {
+    const selectedValue = 'a-value'
+    const selectorFn = jest.fn()
+    when(selectorFn)
+      .mockReturnValue(selectedValue)
+
+    const result = effect.select(selectorFn)
+
+    expect(result).toStrictEqual(selectedValue)
+  })
 })

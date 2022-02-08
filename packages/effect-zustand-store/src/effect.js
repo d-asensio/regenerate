@@ -14,7 +14,7 @@ export function createZustandEffect (dependencies = {}) {
   function select (selectorFn, ...args) {
     const state = store.getState()
 
-    selectorFn(state, ...args)
+    return selectorFn(state, ...args)
   }
 
   return {
