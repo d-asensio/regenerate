@@ -1,5 +1,5 @@
-import { EffectDescriptor } from '../effectDescriptor'
-import { runEffectStreamAgainstExecutionPlanTest } from './runEffectStreamAgainstExecutionPlanTest'
+import { EffectDescriptor } from '@regenerate/core'
+import { runEffectStreamAgainstExecutionPlan } from './runEffectStreamAgainstExecutionPlan'
 
 describe('runEffectStreamAgainstExecutionPlan', () => {
   it('should return an object having received descriptors from the effect stream and expected descriptors from the execution plan', () => {
@@ -22,7 +22,7 @@ describe('runEffectStreamAgainstExecutionPlan', () => {
       }
     ]
 
-    const result = runEffectStreamAgainstExecutionPlanTest(effectStream, effectExecutionPlan)
+    const result = runEffectStreamAgainstExecutionPlan(effectStream, effectExecutionPlan)
 
     expect(result).toStrictEqual({
       expected: [
@@ -73,7 +73,7 @@ describe('runEffectStreamAgainstExecutionPlan', () => {
       }
     ]
 
-    const result = runEffectStreamAgainstExecutionPlanTest(effectStream, effectExecutionPlan)
+    const result = runEffectStreamAgainstExecutionPlan(effectStream, effectExecutionPlan)
 
     expect(result).toStrictEqual({
       expected: [
@@ -101,7 +101,7 @@ describe('runEffectStreamAgainstExecutionPlan', () => {
       }
     ]
 
-    runEffectStreamAgainstExecutionPlanTest(effectStream, effectExecutionPlan)
+    runEffectStreamAgainstExecutionPlan(effectStream, effectExecutionPlan)
 
     expect(receivedReturnValue).toBe(expectedReturnValue)
   })
@@ -121,7 +121,7 @@ describe('runEffectStreamAgainstExecutionPlan', () => {
       }
     ]
 
-    const act = () => runEffectStreamAgainstExecutionPlanTest(effectStream, effectExecutionPlan)
+    const act = () => runEffectStreamAgainstExecutionPlan(effectStream, effectExecutionPlan)
 
     expect(act).toThrow(expectedError)
   })
@@ -141,7 +141,7 @@ describe('runEffectStreamAgainstExecutionPlan', () => {
       }
     ]
 
-    const act = () => runEffectStreamAgainstExecutionPlanTest(effectStream, effectExecutionPlan)
+    const act = () => runEffectStreamAgainstExecutionPlan(effectStream, effectExecutionPlan)
 
     expect(act).toThrowWithMessage(Error, 'An effect recipe cannot contain both returns and throws values')
   })
@@ -165,7 +165,7 @@ describe('runEffectStreamAgainstExecutionPlan', () => {
       }
     ]
 
-    const act = () => runEffectStreamAgainstExecutionPlanTest(effectStream, effectExecutionPlan)
+    const act = () => runEffectStreamAgainstExecutionPlan(effectStream, effectExecutionPlan)
 
     expect(act).toThrowWithMessage(Error, 'The execution plan cannot be larger than the effect stream')
   })
@@ -187,7 +187,7 @@ describe('runEffectStreamAgainstExecutionPlan', () => {
       }
     ]
 
-    const act = () => runEffectStreamAgainstExecutionPlanTest(effectStream, effectExecutionPlan)
+    const act = () => runEffectStreamAgainstExecutionPlan(effectStream, effectExecutionPlan)
 
     expect(act).toThrowWithMessage(Error, 'The effect stream cannot be larger than the execution plan')
   })

@@ -1,5 +1,5 @@
 import { matcherHint, diff } from 'jest-matcher-utils'
-import { runEffectStreamAgainstExecutionPlanTest } from '../../src/testHelpers/runEffectStreamAgainstExecutionPlanTest'
+import { runEffectStreamAgainstExecutionPlan } from '@regenerate/test-helpers'
 import isEqual from 'lodash.isequal'
 
 const failMessage = (expected, received) => () => `${matcherHint(
@@ -12,7 +12,7 @@ ${diff(expected, received)}`
 
 export function toGenerateEffects (effectStream, effectExecutionPlan) {
   try {
-    const { expected, received } = runEffectStreamAgainstExecutionPlanTest(effectStream, effectExecutionPlan)
+    const { expected, received } = runEffectStreamAgainstExecutionPlan(effectStream, effectExecutionPlan)
 
     if (!isEqual(expected, received)) {
       return {

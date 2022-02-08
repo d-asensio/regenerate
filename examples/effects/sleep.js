@@ -1,7 +1,7 @@
-import effectsRegistry from '../../src/effectRegistry'
+import { effectRegistry } from '@regenerate/core'
 
 export default {
-  milliseconds: effectsRegistry.create(
+  milliseconds: effectRegistry.create(
     async (ms) => new Promise(
       resolve => setTimeout(resolve, ms)
     )

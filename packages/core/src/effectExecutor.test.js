@@ -1,6 +1,6 @@
+import { when } from 'jest-when'
 import { createEffectExecutor, UnableToExecuteEffectError } from './effectExecutor'
 import { EffectDescriptor } from './effectDescriptor'
-import { when } from 'jest-when'
 import { NotRegisteredEffectError } from './effectRegistry'
 
 const effectRegistry = {

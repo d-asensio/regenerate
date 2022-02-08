@@ -1,7 +1,7 @@
-import { EffectDescriptor } from '../effectDescriptor'
+import { EffectDescriptor } from '@regenerate/core'
 import isEqual from 'lodash.isequal'
 
-export function runEffectStreamAgainstExecutionPlanTest (effectIterator, executionPlan) {
+export function runEffectStreamAgainstExecutionPlan (effectIterator, executionPlan) {
   const executionPlanIterator = executionPlan[Symbol.iterator]()
 
   let effectIteratee = effectIterator.next()

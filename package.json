@@ -1,12 +1,15 @@
 {
-  "name": "regenerate",
+  "name": "@regenerate/wrapper",
   "version": "1.0.0",
   "description": "Manage side effects with testability and ergonomics",
   "main": "examples/index.js",
   "repository": "https://github.com/d-asensio/regenerate.git",
   "author": "David Asensio Cañas <david.asensio@icloud.com>",
   "license": "MIT",
-  "private": false,
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "start": "babel-node examples/index.js",
     "test": "jest",
@@ -49,8 +52,6 @@
     "yarn": "1.22.17"
   },
   "dependencies": {
-    "isomorphic-unfetch": "^3.1.0",
-    "jest-matcher-utils": "^27.5.0",
-    "lodash.isequal": "^4.5.0"
+    "isomorphic-unfetch": "^3.1.0"
   }
 }

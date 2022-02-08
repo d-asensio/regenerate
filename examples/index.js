@@ -1,4 +1,5 @@
-import effectsRunner from '../src/effectsRunner'
+import { effectsRunner } from '@regenerate/core'
+
 import { store } from './effects/store'
 import { incrementCounter } from './services/incrementCounter'
 import { writeErrorToStore } from './services/writeErrorToStore'
@@ -30,7 +31,6 @@ store.set('users', {
   console.log('Counter value:', store.get('errorMessage'))
 
   // Example 3 async operations (TBD)
-
   await effectsRunner.run(
     fetchAndSavePosts({ path: '/posts', userId: 'user-1' })
   )

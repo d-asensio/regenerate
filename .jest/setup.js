@@ -1,7 +1,7 @@
 import * as jestExtendedMatchers from 'jest-extended';
-import { toGenerateEffects } from '../examples/matchers/toGenerateEffects'
+import * as regenerateMatchers from '@regenerate/jest-matchers'
 
 expect.extend({
   ...jestExtendedMatchers,
-  toGenerateEffects,
+  ...regenerateMatchers
 })

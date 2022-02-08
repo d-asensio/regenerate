@@ -1,0 +1,16 @@
+{
+  "name": "@regenerate/test-helpers",
+  "version": "1.0.0",
+  "description": "Test utils to help testing regenerate effect streams",
+  "main": "src/index.js",
+  "repository": "https://github.com/d-asensio/regenerate.git",
+  "author": "David Asensio Cañas <david.asensio@icloud.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "lodash.isequal": "^4.5.0"
+  },
+  "peerDependencies": {
+    "@regenerate/core": "1.0.0"
+  }
+}
