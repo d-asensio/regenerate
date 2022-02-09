@@ -1,12 +1,16 @@
 {
   "name": "@regenerate/jest-matchers",
   "version": "1.0.0",
-  "description": "Test utils to help testing regenerate effect streams",
+  "description": "Jest matchers that allows to assert regenerate effect streams easily",
   "main": "src/index.js",
+  "types": "types/index.d.ts",
   "repository": "https://github.com/d-asensio/regenerate.git",
   "author": "David Asensio Cañas <david.asensio@icloud.com>",
   "license": "MIT",
   "private": false,
+  "scripts": {
+    "types:check": "tsc --noEmit types/index.d.ts"
+  },
   "dependencies": {
     "jest-matcher-utils": "^27.5.0",
     "lodash.isequal": "^4.5.0"
