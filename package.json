@@ -2,16 +2,16 @@
   "name": "@regenerate/wrapper",
   "version": "1.0.0",
   "description": "Manage side effects with testability and ergonomics",
-  "main": "examples/index.js",
   "repository": "https://github.com/d-asensio/regenerate.git",
   "author": "David Asensio Cañas <david.asensio@icloud.com>",
   "license": "MIT",
   "private": true,
   "workspaces": [
+    "examples/*",
     "packages/*"
   ],
   "scripts": {
-    "start": "babel-node examples/index.js",
+    "start": "babel-node examples/vanilla/index.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "lint": "standard",
