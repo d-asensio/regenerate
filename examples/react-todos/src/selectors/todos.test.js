@@ -45,4 +45,24 @@ describe('todoSelector', () => {
 
     expect(result).toStrictEqual(todo)
   })
+
+  it('should return "null" in case there is no todo with the provided id in the state', () => {
+    const state = {
+      todosById: {
+        'any-todo-id': {}
+      }
+    }
+
+    const result = todoSelector(state, 'not-existing-id')
+
+    expect(result).toBe(null)
+  })
+
+  it('should return "null" in case the state is empty', () => {
+    const state = {}
+
+    const result = todoSelector(state, 'not-existing-id')
+
+    expect(result).toBe(null)
+  })
 })
