@@ -1,4 +1,4 @@
-import { todoIdListSelector } from './todos'
+import { todoIdListSelector, todoSelector } from './todos'
 
 describe('todoIdListSelector', () => {
   it('should get the list of ids for the todos in the state', () => {
@@ -23,5 +23,26 @@ describe('todoIdListSelector', () => {
     const result = todoIdListSelector(state)
 
     expect(result).toStrictEqual([])
+  })
+})
+
+describe('todoSelector', () => {
+  it('should get a todo by id from the state', () => {
+    const todoId = 'a-todo-id'
+    const todo = {
+      id: todoId,
+      title: 'Something pending',
+      completed: false
+    }
+    const state = {
+      todosById: {
+        'any-todo-id': {},
+        [todoId]: todo
+      }
+    }
+
+    const result = todoSelector(state, todoId)
+
+    expect(result).toStrictEqual(todo)
   })
 })
