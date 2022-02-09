@@ -1,6 +1,11 @@
 import { EffectDescriptor } from '@regenerate/core'
 import { runEffectStreamAgainstExecutionPlan } from './runEffectStreamAgainstExecutionPlan'
 
+/**
+ * TODO:
+ *  - Cover case: the stream is empty
+ */
+
 describe('runEffectStreamAgainstExecutionPlan', () => {
   it('should return an object having received descriptors from the effect stream and expected descriptors from the execution plan', () => {
     const firstEffectDescriptor = EffectDescriptor.fromObject({

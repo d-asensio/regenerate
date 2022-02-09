@@ -6,6 +6,7 @@
     "@regenerate/core": "1.0.0",
     "grommet": "^2.20.1",
     "grommet-icons": "^4.7.0",
+    "lodash.keyby": "^4.6.0",
     "re-reselect": "^4.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
