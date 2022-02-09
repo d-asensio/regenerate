@@ -4,6 +4,7 @@ import { runEffectStreamAgainstExecutionPlan } from './runEffectStreamAgainstExe
 /**
  * TODO:
  *  - Cover case: the stream is empty
+ *  - Forgot to yield an effect
  */
 
 describe('runEffectStreamAgainstExecutionPlan', () => {
