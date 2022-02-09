@@ -1,13 +1,17 @@
 import { Box, Button, Card, CheckBox, TextInput } from 'grommet'
 import { Edit, Save, Trash } from 'grommet-icons'
+
 import { useSelector } from '../store'
 import { todoSelector } from '../selectors/todos'
 
 export function Todo ({ id }) {
-  const editing = false
-  const { title, completed } = useSelector(
+  const todo = useSelector(
     state => todoSelector(state, id)
   )
+
+  if(!todo) return null
+
+  const { title, completed, editing = false } = todo
 
   return (
     <Card direction="row" pad="medium" gap="medium" fill="horizontal" justify="between" align="center">
