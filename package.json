@@ -54,7 +54,6 @@
     "yarn": "1.22.17"
   },
   "dependencies": {
-    "isomorphic-unfetch": "^3.1.0",
-    "zustand": "^3.6.9"
+    "isomorphic-unfetch": "^3.1.0"
   }
 }
