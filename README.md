@@ -1,25 +1,93 @@
-# regenerate.js
+# Regenerate
 
 A tiny module to manage side effects in a declarative way, with testability and ergonomics in mind.
 
-> **Warning:** At the moment, all the code here have been written to explore how the API would look like. Everything is a scratching and it is poorly tested, almost everything is subject to change, take it with a grain of salt.
+## Quick introduction
 
-## Project structure
+Side effects are sometimes difficult to test. It's common to end up mocking a lot of infrastructure pieces (HTTP calls, browser API's, etc.) to test them, and this makes tests to become tedious and difficult to understand.
 
-##### `src/regenerate.js`
-The main code, this executes effect descriptor streams, using the `effectRegistry`
+Regenerate aims to make it very easy to implement and test side effects. It is inspired by [reffects](https://github.com/trovit/reffects), [re-frame](https://github.com/day8/re-frame) and [redux-saga](https://github.com/redux-saga/redux-saga) but tries to improve on them by applying some learnings and insights that we gathered over the years.
 
-##### `src/effectRegistry.js`
-Where effects are stored, its main goal is to register effects and build their associated effect descriptors, and create their identifiers. (similar to reffect's `registerEffectHandler`)
+**Definition:**
+```js
+function * fetchProducts () {
+  try {
+    const products = yield http.fetch('https:/api.company.com/products')
+    
+    yield store.set({
+      products
+    })
+  } catch {
+    yield store.set({
+      products: []
+    })
+  }
+}
+```
 
-##### `src/effects/`
-Directory containing effect declaration and registration. (similar to reffect's `state.set` and company).
+**Testing:**
+```js
+it('should fetch and store products', () => {
+  const products = [
+    {
+      id: 'product-1',
+      name: 'Piece of cake'
+    },
+    {
+      id: 'product-2',
+      name: 'Peanuts'
+    }
+  ]
+  
+  expect(
+    fetchProducts()
+  ).toGenerateEffects([
+    {
+      effect: yield http.fetch('https:/api.company.com/products'),
+      returns: products
+    },
+    {
+      effect: store.set({ products })
+    }
+  ])
+})
 
-##### `src/matchers/toGenerateEffects.js`
-Custom jest matcher that makes it very easy to test effect stream generators (a.k.a. `services`) in a declarative way.
+it('should store empty array if the products API fails', () => {
+  expect(
+    fetchProducts()
+  ).toGenerateEffects([
+    {
+      effect: yield http.fetch('https:/api.company.com/products'),
+      throws: new HttpError()
+    },
+    {
+      effect: store.set({ products: [] })
+    }
+  ])
+})
+```
 
-##### `src/services/`
-Services are like reffect handlers, except that they are generators instead of functions, and intended to be bounded to an entity (counter, publisher, user, etc.). Here you can also see how a service test would look like.
+**Execution:**
+```js
+run(
+  fetchProducts()
+)
+```
 
-##### `src/index.js`
-Example code showing how to execute services.
+## Prior art
+
+## Documentation
+
+## Installation
+
+Regenerate is composed by various modules, to start using it you'll need to install its core using your dependency manager of choice:
+
+**Using yarn:**
+```bash
+yarn add @regenerate/core
+```
+
+**Using npm:**
+```bash
+npm i @regenerate/core
+```
