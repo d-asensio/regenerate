@@ -8,6 +8,8 @@ Side effects are sometimes difficult to test. It's common to end up mocking a lo
 
 Regenerate aims to make it very easy to implement and test side effects. It is inspired by [reffects](https://github.com/trovit/reffects), [re-frame](https://github.com/day8/re-frame) and [redux-saga](https://github.com/redux-saga/redux-saga) but tries to improve on them by applying some learnings and insights that we gathered over the years.
 
+To illustrate that, let's see an example, it should not need more explanation than the code itself:
+
 **Definition:**
 ```js
 function * fetchProducts () {
