@@ -34,10 +34,6 @@ it('should fetch and store products', () => {
     {
       id: 'product-1',
       name: 'Piece of cake'
-    },
-    {
-      id: 'product-2',
-      name: 'Peanuts'
     }
   ]
   
