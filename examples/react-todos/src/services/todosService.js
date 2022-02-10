@@ -1,7 +1,7 @@
 import keyBy from 'lodash.keyby'
 import http from '../effects/http'
 import store from '../effects/store'
-import { todoSelector } from '../selectors/todos'
+import { todosByIdSelector, todoSelector } from '../selectors/todos'
 
 export const todosService = (function IIFE () {
   function * fetchTodos () {
@@ -12,15 +12,20 @@ export const todosService = (function IIFE () {
       ({ id }) => id
     )
 
+    const todoIdList = Object.keys(todosById)
+
     yield store.set({
-      todosById
+      todosById,
+      todoIdList
     })
   }
 
   function * toggleTodo (id) {
     const { completed } = yield store.select(todoSelector, id)
+    const todosById = yield store.select(todosByIdSelector)
     yield store.set({
       todosById: {
+        ...todosById,
         [id]: {
           completed: !completed
         }

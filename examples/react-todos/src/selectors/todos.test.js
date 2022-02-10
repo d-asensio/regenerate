@@ -1,15 +1,38 @@
-import { todoIdListSelector, todoSelector } from './todos'
+import { todoIdListSelector, todosByIdSelector, todoSelector } from './todos'
+
+describe('todosByIdSelector', () => {
+  it('should return todosById from the state', () => {
+    const todosById = {
+      'any-todo-id': {}
+    }
+    const state = {
+      todosById
+    }
+
+    const result = todosByIdSelector(state)
+
+    expect(result).toStrictEqual(todosById)
+  })
+
+  it('should return an empty object if todosById is not defined in the state', () => {
+    const state = {}
+
+    const result = todosByIdSelector(state)
+
+    expect(result).toStrictEqual({})
+  })
+})
 
 describe('todoIdListSelector', () => {
   it('should get the list of ids for the todos in the state', () => {
     const state = {
-      todosById: {
-        'todo-1': {},
-        'todo-2': {}
-      }
+      todoIdList: [
+        'todo-1',
+        'todo-2'
+      ]
     }
 
-    const result = todoIdListSelector(state);
+    const result = todoIdListSelector(state)
 
     expect(result).toStrictEqual([
       'todo-1',

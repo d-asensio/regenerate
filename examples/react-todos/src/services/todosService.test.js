@@ -1,7 +1,7 @@
 import http from '../effects/http'
 import { todosService } from './todosService'
 import store from '../effects/store'
-import { todoSelector } from '../selectors/todos'
+import { todosByIdSelector, todoSelector } from '../selectors/todos'
 
 describe('fetchTodos', () => {
   it('should fetch todos from the API and store them in the store', () => {
@@ -36,7 +36,11 @@ describe('fetchTodos', () => {
               title: 'Another todo',
               completed: false
             }
-          }
+          },
+          todoIdList: [
+            'a-todo-id',
+            'another-todo-id'
+          ]
         })
       }
     ])
@@ -46,6 +50,11 @@ describe('fetchTodos', () => {
 describe('toggleTodo', () => {
   it('should deactivate the complete state', () => {
     const todoId = 'a-todo-id'
+    const todosById = {
+      'another-todo-id': {
+        completed: false
+      }
+    }
     expect(
       todosService.toggleTodo(todoId)
     ).toGenerateEffects([
@@ -54,11 +63,18 @@ describe('toggleTodo', () => {
         returns: {
           id: todoId,
           completed: true
-        },
+        }
+      },
+      {
+        effect: store.select(todosByIdSelector),
+        returns: todosById
       },
       {
         effect: store.set({
           todosById: {
+            'another-todo-id': {
+              completed: false
+            },
             [todoId]: {
               completed: false
             }
@@ -70,6 +86,11 @@ describe('toggleTodo', () => {
 
   it('should activate the complete state', () => {
     const todoId = 'a-todo-id'
+    const todosById = {
+      'another-todo-id': {
+        completed: false
+      }
+    }
     expect(
       todosService.toggleTodo(todoId)
     ).toGenerateEffects([
@@ -78,11 +99,18 @@ describe('toggleTodo', () => {
         returns: {
           id: todoId,
           completed: false
-        },
+        }
+      },
+      {
+        effect: store.select(todosByIdSelector),
+        returns: todosById
       },
       {
         effect: store.set({
           todosById: {
+            'another-todo-id': {
+              completed: false
+            },
             [todoId]: {
               completed: true
             }

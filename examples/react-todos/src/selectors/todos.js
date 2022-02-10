@@ -1,13 +1,8 @@
-import { createSelector } from 'reselect'
 import { createCachedSelector } from 're-reselect'
 
-const todosByIdSelector = ({ todosById }) => todosById ?? {}
+export const todosByIdSelector = ({ todosById }) => todosById ?? {}
 
-export const todoIdListSelector = createSelector(
-  todosByIdSelector,
-  todosById => Object.keys(todosById),
-
-)
+export const todoIdListSelector = ({ todoIdList }) => todoIdList ?? []
 
 const todoIdParameter = (_, id) => id
 
