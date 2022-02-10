@@ -72,10 +72,6 @@ run(
 )
 ```
 
-## Prior art
-
-## Documentation
-
 ## Installation
 
 Regenerate is composed by various modules, to start using it you'll need to install its core using your dependency manager of choice:
@@ -89,3 +85,11 @@ yarn add @regenerate/core
 ```bash
 npm i @regenerate/core
 ```
+
+## Set up
+
+## Documentation
+
+### Creating new effects
+
+## Prior art
