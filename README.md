@@ -12,9 +12,9 @@ A tiny module to manage side effects in a declarative way, with testability and 
 - [Installation](#installation)
 - [Examples](#examples)
 - [Setting up Jest](#setting-up-jest)
-- [API](#api)
 - [Available effects](#available-effects)
 - [Create your own effects](#create-your-own-effects)
+- [API](#api)
 - [Prior art](#prior-art)
 
 <!-- tocstop -->
@@ -129,12 +129,21 @@ Add your setup script to your Jest `setupFilesAfterEnv` configuration. [See for 
 }
 ```
 
-> **Tip:** If you are using another test runner, we've got you covered, check the `@regenerate/test-helpers` [documentation](./packages/test-helpers/README.md). 
-
-## API
+> **Tip:** If you are using another test runner, we've got you covered, check the `@regenerate/test-helpers` [documentation](./packages/test-helpers/README.md).
 
 ## Available effects
 
+Some common effects are already provided by Regenerate. You can install them in your application and start using them right away, here is the list of available effects:
+
+- [@regenerate/effect-env](./packages/effect-env) - Access environment variables
+- [@regenerate/effect-fetch](./packages/effect-fetch) - Use fetch-like requests (like [node-fetch](https://github.com/node-fetch/node-fetch), [unfetch](https://github.com/developit/unfetch) or anything that is compliant with the fetch API)
+- [@regenerate/effect-sleep](./packages/effect-sleep) - Hang your generators for a while
+- [@regenerate/effect-zustand-store](./packages/effect-zustand-store) - Manage the state of your app with [zustand](https://github.com/pmndrs/zustand)
+
 ## Create your own effects
+
+You can also create your own effects.
+
+## API
 
 ## Prior art
