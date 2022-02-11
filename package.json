@@ -16,7 +16,8 @@
     "test:watch": "jest --watch",
     "lint": "standard",
     "lint:fix": "standard --fix",
-    "types:check": "yarn workspace @regenerate/jest-matchers run types:check"
+    "types:check": "yarn workspace @regenerate/jest-matchers run types:check",
+    "markdown:generate-toc": "markdown-toc -i ./README.md"
   },
   "devDependencies": {
     "@babel/core": "^7.17.0",
@@ -30,12 +31,14 @@
     "jest-extended": "^2.0.0",
     "jest-when": "^3.5.0",
     "lint-staged": ">=10",
+    "markdown-toc": "^1.2.0",
     "standard": "^16.0.4",
     "typescript": "^4.5.5"
   },
   "lint-staged": {
     "packages/**/*.js": [
-      "yarn lint:fix"
+      "yarn lint:fix",
+      "yarn markdown:generate-toc"
     ]
   },
   "husky": {
