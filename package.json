@@ -40,7 +40,8 @@
       "yarn markdown:generate-toc"
     ],
     "packages/**/*.js": [
-      "yarn lint:fix"
+      "yarn lint:fix",
+      "jest --bail --findRelatedTests"
     ]
   },
   "husky": {
