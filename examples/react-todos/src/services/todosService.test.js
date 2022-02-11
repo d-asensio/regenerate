@@ -1,7 +1,7 @@
 import http from '../effects/http'
 import { todosService } from './todosService'
 import store from '../effects/store'
-import { todosByIdSelector, todoSelector } from '../selectors/todos'
+import { toggleTodoMutation } from '../mutations/todos'
 
 describe('fetchTodos', () => {
   it('should fetch todos from the API and store them in the store', () => {
@@ -48,74 +48,14 @@ describe('fetchTodos', () => {
 })
 
 describe('toggleTodo', () => {
-  it('should deactivate the complete state', () => {
+  it('should use store.mutate with the toggleTodoMutation', () => {
     const todoId = 'a-todo-id'
-    const todosById = {
-      'another-todo-id': {
-        completed: false
-      }
-    }
-    expect(
-      todosService.toggleTodo(todoId)
-    ).toGenerateEffects([
-      {
-        effect: store.select(todoSelector, todoId),
-        returns: {
-          id: todoId,
-          completed: true
-        }
-      },
-      {
-        effect: store.select(todosByIdSelector),
-        returns: todosById
-      },
-      {
-        effect: store.set({
-          todosById: {
-            'another-todo-id': {
-              completed: false
-            },
-            [todoId]: {
-              completed: false
-            }
-          }
-        })
-      }
-    ])
-  })
 
-  it('should activate the complete state', () => {
-    const todoId = 'a-todo-id'
-    const todosById = {
-      'another-todo-id': {
-        completed: false
-      }
-    }
     expect(
       todosService.toggleTodo(todoId)
     ).toGenerateEffects([
       {
-        effect: store.select(todoSelector, todoId),
-        returns: {
-          id: todoId,
-          completed: false
-        }
-      },
-      {
-        effect: store.select(todosByIdSelector),
-        returns: todosById
-      },
-      {
-        effect: store.set({
-          todosById: {
-            'another-todo-id': {
-              completed: false
-            },
-            [todoId]: {
-              completed: true
-            }
-          }
-        })
+        effect: store.mutate(toggleTodoMutation, todoId)
       }
     ])
   })
