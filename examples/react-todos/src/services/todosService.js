@@ -1,6 +1,6 @@
 import http from '../effects/http'
 import store from '../effects/store'
-import { saveTodosMutation, toggleTodoMutation } from '../mutations/todos'
+import { deleteTodoMutation, saveTodosMutation, toggleTodoMutation } from '../mutations/todos'
 
 export const todosService = (function IIFE () {
   function * fetchTodos () {
@@ -13,8 +13,13 @@ export const todosService = (function IIFE () {
     yield store.mutate(toggleTodoMutation, id)
   }
 
+  function * deleteTodo (id) {
+    yield store.mutate(deleteTodoMutation, id)
+  }
+
   return {
     fetchTodos,
-    toggleTodo
+    toggleTodo,
+    deleteTodo
   }
 })()

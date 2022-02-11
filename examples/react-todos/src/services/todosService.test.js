@@ -1,7 +1,7 @@
 import http from '../effects/http'
 import { todosService } from './todosService'
 import store from '../effects/store'
-import { saveTodosMutation, toggleTodoMutation } from '../mutations/todos'
+import { deleteTodoMutation, saveTodosMutation, toggleTodoMutation } from '../mutations/todos'
 
 describe('fetchTodos', () => {
   it('should fetch todos from the API and store them in the store', () => {
@@ -40,6 +40,20 @@ describe('toggleTodo', () => {
     ).toGenerateEffects([
       {
         effect: store.mutate(toggleTodoMutation, todoId)
+      }
+    ])
+  })
+})
+
+describe('deleteTodo', () => {
+  it('should use store.mutate with the deleteTodoMutation', () => {
+    const todoId = 'a-todo-id'
+
+    expect(
+      todosService.deleteTodo(todoId)
+    ).toGenerateEffects([
+      {
+        effect: store.mutate(deleteTodoMutation, todoId)
       }
     ])
   })
