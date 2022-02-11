@@ -86,6 +86,13 @@ yarn add @regenerate/core
 npm i @regenerate/core
 ```
 
+## Examples
+
+We've built some example projects with regenerate, check them out:
+
+- [react-todos](./examples/react-todos) - A basic todo app using [zustand](https://github.com/pmndrs/zustand), [immer](https://github.com/immerjs/immer) and [grommet](https://v2.grommet.io/).
+
+
 ## Setting up Jest
 
 We provide a custom jest matcher to help you test generators that yield effects. To use it you'll have to configure Jest:
@@ -109,8 +116,10 @@ Add your setup script to your Jest `setupFilesAfterEnv` configuration. [See for 
 
 > **Tip:** If you are using another test runner, we've got you covered, check the `@regenerate/test-helpers` [documentation](./packages/test-helpers/README.md). 
 
-## Documentation
+## API Documentation
 
-### Creating new effects
+## Create your own effects
 
 ## Prior art
+
+TBD
