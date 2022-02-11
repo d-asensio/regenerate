@@ -17,3 +17,10 @@ export const saveTodosMutation = produce((state, todos) => {
   state.todosById = todosById
   state.todoIdList = todoIdList
 })
+
+export const deleteTodoMutation = produce((state, id) => {
+  delete state.todosById[id]
+  state.todoIdList = state.todoIdList.filter(
+    todoId => todoId !== id
+  )
+})

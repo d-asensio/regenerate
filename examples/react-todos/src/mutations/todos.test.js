@@ -1,5 +1,5 @@
 import deepFreeze from 'deep-freeze'
-import { saveTodosMutation, toggleTodoMutation } from './todos'
+import { deleteTodoMutation, saveTodosMutation, toggleTodoMutation } from './todos'
 
 describe('toggleTodoMutation', () => {
   it('should activate the "completed" state of the given todo, without modifying the original state', () => {
@@ -101,5 +101,42 @@ describe('saveTodosMutation', () => {
         'another-todo-id'
       ]
     })
+  })
+})
+
+describe('deleteTodoMutation', () => {
+  const todoId = 'a-todo-id'
+  const state = deepFreeze({
+    todosById: {
+      [todoId]: {
+        id: todoId,
+        title: 'A todo',
+        completed: true
+      },
+      'another-todo-id': {
+        id: 'another-todo-id',
+        title: 'Another todo',
+        completed: false
+      }
+    },
+    todoIdList: [
+      'a-todo-id',
+      'another-todo-id'
+    ]
+  })
+
+  const result = deleteTodoMutation(state, todoId)
+
+  expect(result).toStrictEqual({
+    todosById: {
+      'another-todo-id': {
+        id: 'another-todo-id',
+        title: 'Another todo',
+        completed: false
+      }
+    },
+    todoIdList: [
+      'another-todo-id'
+    ]
   })
 })
