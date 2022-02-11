@@ -12,13 +12,19 @@ export function Todo ({ id }) {
     state => todoSelector(state, id)
   )
 
-  const handleCheckboxClick = useCallback(() => {
+  const handleCheckboxClick = useCallback(() =>
     run(
       todosService.toggleTodo(id)
     )
-  },[id])
+  , [id])
 
-  if(!todo) return null
+  const handleDeleteClick = useCallback(() =>
+    run(
+      todosService.deleteTodo(id)
+    )
+  , [id])
+
+  if (!todo) return null
 
   const { title, completed, editing = false } = todo
 
@@ -30,7 +36,7 @@ export function Todo ({ id }) {
       </Box>
       <Box align="center" justify="center" direction="row" gap="xxsmall">
         <Button icon={editing ? <Save/> : <Edit/>}/>
-        <Button icon={<Trash/>} disabled={editing}/>
+        <Button icon={<Trash/>} disabled={editing} onClick={handleDeleteClick}/>
       </Box>
     </Card>
   )
