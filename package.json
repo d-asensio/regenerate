@@ -36,9 +36,11 @@
     "typescript": "^4.5.5"
   },
   "lint-staged": {
-    "packages/**/*.js": [
-      "yarn lint:fix",
+    "README.md": [
       "yarn markdown:generate-toc"
+    ],
+    "packages/**/*.js": [
+      "yarn lint:fix"
     ]
   },
   "husky": {
