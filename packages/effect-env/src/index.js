@@ -1,8 +1,9 @@
 import { createEffect } from '@regenerate/core'
 import { createEnvEffect } from './effect'
 
-const effect = createEnvEffect()
-
-export const env = {
-  get: createEffect(effect.get)
+export default function create (dependencies) {
+  const effect = createEnvEffect(dependencies)
+  return {
+    get: createEffect(effect.get)
+  }
 }

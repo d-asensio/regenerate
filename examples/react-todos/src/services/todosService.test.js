@@ -1,6 +1,8 @@
+import env from '../effects/env'
 import http from '../effects/http'
-import { todosService } from './todosService'
 import store from '../effects/store'
+
+import { todosService } from './todosService'
 import { deleteTodoMutation, saveTodosMutation, toggleTodoMutation } from '../mutations/todos'
 
 describe('fetchTodos', () => {
@@ -21,7 +23,11 @@ describe('fetchTodos', () => {
       todosService.fetchTodos()
     ).toGenerateEffects([
       {
-        effect: http.fetchJson('https://jsonplaceholder.typicode.com/todos'),
+        effect: env.get('REACT_APP_API_BASE_URL'),
+        returns: 'https://an.api.url'
+      },
+      {
+        effect: http.fetchJson('https://an.api.url/todos'),
         returns: todos
       },
       {
