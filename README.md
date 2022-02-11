@@ -2,6 +2,8 @@
 
 A tiny module to manage side effects in a declarative way, with testability and ergonomics in mind.
 
+> **Warning:** Regenerate is still under development, it not battle-tested and the API is subject to change, but it is getting there soon!
+
 ## Quick introduction
 
 Side effects are sometimes difficult to test. It's common to end up mocking a lot of infrastructure pieces (HTTP calls, browser API's, etc.) to test them, and this makes tests to become tedious and difficult to understand.
@@ -76,17 +78,36 @@ run(
 
 Regenerate is composed by various modules, to start using it you'll need to install its core using your dependency manager of choice:
 
-**Using yarn:**
 ```bash
+# Using yarn
 yarn add @regenerate/core
-```
 
-**Using npm:**
-```bash
+# Using npm
 npm i @regenerate/core
 ```
 
-## Set up
+## Setting up Jest
+
+We provide a custom jest matcher to help you test generators that yield effects. To use it you'll have to configure Jest:
+
+```javascript
+// ./testSetup.js
+import * as regenerateMatchers from '@regenerate/jest-matchers'
+
+expect.extend({
+  ...regenerateMatchers
+})
+```
+
+Add your setup script to your Jest `setupFilesAfterEnv` configuration. [See for help](https://jestjs.io/docs/en/configuration.html#setupfilesafterenv-array)
+
+```json
+"jest": {
+  "setupFilesAfterEnv": ["./testSetup.js"]
+}
+```
+
+> **Tip:** If you are using another test runner, we've got you covered, check the `@regenerate/test-helpers` [documentation](./packages/test-helpers/README.md). 
 
 ## Documentation
 
