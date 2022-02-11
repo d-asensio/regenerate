@@ -8,6 +8,17 @@ A tiny module to manage side effects in a declarative way, with testability and 
 
 <!-- toc -->
 
+- [Quick introduction](#quick-introduction)
+- [Installation](#installation)
+- [Examples](#examples)
+- [Setting up Jest](#setting-up-jest)
+- [API](#api)
+- [Available effects](#available-effects)
+- [Create your own effects](#create-your-own-effects)
+- [Prior art](#prior-art)
+
+<!-- tocstop -->
+
 ## Quick introduction
 
 Side effects are sometimes difficult to test. It's common to end up mocking a lot of infrastructure pieces (HTTP calls, browser API's, etc.) to test them, and this makes tests to become tedious and difficult to understand.
@@ -127,5 +138,3 @@ Add your setup script to your Jest `setupFilesAfterEnv` configuration. [See for 
 ## Create your own effects
 
 ## Prior art
-
-TBD

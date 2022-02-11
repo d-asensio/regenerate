@@ -17,7 +17,7 @@
     "lint": "standard",
     "lint:fix": "standard --fix",
     "types:check": "yarn workspace @regenerate/jest-matchers run types:check",
-    "markdown:generate-toc": "markdown-toc -i ./README.md"
+    "markdown:generate-toc": "markdown-toc -i"
   },
   "devDependencies": {
     "@babel/core": "^7.17.0",
