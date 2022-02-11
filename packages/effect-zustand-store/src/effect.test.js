@@ -80,3 +80,29 @@ describe('select', () => {
     expect(result).toStrictEqual(selectedValue)
   })
 })
+
+describe('mutate', () => {
+  const effect = createZustandEffect({ store })
+
+  it('should generate a new state through the given mutation function and write it to the state', () => {
+    const mutationFn = jest.fn()
+    const state = {
+      aPiece: 'of state'
+    }
+    const args = [
+      'an-argument',
+      'another-argument'
+    ]
+    const mutatedState = {
+      ...state,
+      anotherPiece: 'of state'
+    }
+    when(mutationFn)
+      .calledWith(state, ...args)
+      .mockReturnValue(mutatedState)
+
+    effect.mutate(mutationFn, ...args)
+
+    expect(store.setState).toHaveBeenCalledWith(mutatedState)
+  })
+})

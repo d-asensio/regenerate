@@ -17,9 +17,18 @@ export function createZustandEffect (dependencies = {}) {
     return selectorFn(state, ...args)
   }
 
+  function mutate (mutationFn, ...args) {
+    const state = store.getState()
+
+    const newState = mutationFn(state, ...args)
+
+    store.setState(newState)
+  }
+
   return {
     get,
     set,
-    select
+    select,
+    mutate
   }
 }

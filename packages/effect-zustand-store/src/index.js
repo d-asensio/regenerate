@@ -6,6 +6,7 @@ export default function create (dependencies) {
   return {
     get: createEffect(effect.get),
     set: createEffect(effect.set),
-    select: createEffect(effect.select)
+    select: createEffect(effect.select),
+    mutate: createEffect(effect.mutate)
   }
 }
