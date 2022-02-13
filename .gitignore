@@ -6,3 +6,6 @@ node_modules/
 
 # Reports
 coverage/
+
+# Build artifacts
+build/

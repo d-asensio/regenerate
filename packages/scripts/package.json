@@ -1,0 +1,17 @@
+{
+  "name": "@regenerate/scripts",
+  "version": "1.0.0",
+  "description": "Internal scripts to build regenerate",
+  "main": "src/index.js",
+  "repository": "https://github.com/d-asensio/regenerate.git",
+  "author": "David Asensio Cañas <david.asensio@icloud.com>",
+  "license": "MIT",
+  "private": true,
+  "bin": {
+    "regenerate-scripts-build": "./bin/build.js"
+  },
+  "devDependencies": {
+    "esbuild": "^0.14.21",
+    "yargs": "^17.3.1"
+  }
+}
