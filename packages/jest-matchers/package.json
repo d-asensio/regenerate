@@ -13,11 +13,11 @@
     "types:check": "tsc --noEmit types/index.d.ts"
   },
   "dependencies": {
-    "@regenerate/test-helpers": "workspace:*",
+    "@regenerate/test-helpers": "workspace:^",
     "jest-matcher-utils": "^27.5.0",
     "lodash.isequal": "^4.5.0"
   },
   "devDependencies": {
-    "@regenerate/scripts": "workspace:*"
+    "@regenerate/scripts": "workspace:^"
   }
 }

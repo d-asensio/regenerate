@@ -14,9 +14,9 @@
     "lodash.isequal": "^4.5.0"
   },
   "devDependencies": {
-    "@regenerate/scripts": "workspace:*"
+    "@regenerate/scripts": "workspace:^"
   },
   "peerDependencies": {
-    "@regenerate/core": "workspace:*"
+    "@regenerate/core": "workspace:^"
   }
 }
