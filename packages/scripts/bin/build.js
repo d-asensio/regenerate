@@ -10,9 +10,21 @@ const processArgs = yargs(hideBin(process.argv))
     type: 'boolean',
     description: 'Run in watch mode'
   })
+  .option('esm', {
+    type: 'boolean',
+    description: 'Build ESM'
+  })
+  .option('cjs', {
+    type: 'boolean',
+    description: 'Build CJS'
+  })
   .parse()
 
-const { watch = false } = processArgs || {}
+const {
+  watch = false,
+  esm = false,
+  cjs = false
+} = processArgs || {}
 
 const commonConfig = {
   entryPoints: [
@@ -41,10 +53,12 @@ const configCJS = {
 
 ;(async () => {
   try {
-    await Promise.all([
-      esbuild.build(configESM),
-      esbuild.build(configCJS)
-    ])
+    const builds = [
+      esm && esbuild.build(configESM),
+      cjs && esbuild.build(configCJS)
+    ].filter(Boolean)
+
+    await Promise.all(builds)
 
     if (watch) console.log('Watching...')
   } catch (e) {

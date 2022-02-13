@@ -8,8 +8,8 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "build": "regenerate-scripts-build",
-    "watch:build": "regenerate-scripts-build -w"
+    "build": "regenerate-scripts-build --esm --cjs",
+    "watch:build": "yarn build -w"
   },
   "devDependencies": {
     "@regenerate/scripts": "1.0.0"
