@@ -1,9 +1,12 @@
 {
   "name": "@regenerate/effect-zustand-store",
-  "version": "1.0.0",
+  "version": "1.0.1-0",
   "description": "Regenerate effect to use zustand",
   "main": "./build/cjs/index.js",
   "module": "./build/esm/index.js",
+  "files": [
+    "build"
+  ],
   "repository": "https://github.com/d-asensio/regenerate.git",
   "author": "David Asensio Cañas <david.asensio@icloud.com>",
   "license": "MIT",

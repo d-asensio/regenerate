@@ -1,9 +1,12 @@
 {
   "name": "@regenerate/test-helpers",
-  "version": "1.0.0",
+  "version": "1.0.1-0",
   "description": "Test utils to help testing regenerate effect streams",
   "main": "./build/cjs/index.js",
   "repository": "https://github.com/d-asensio/regenerate.git",
+  "files": [
+    "build"
+  ],
   "author": "David Asensio Cañas <david.asensio@icloud.com>",
   "license": "MIT",
   "scripts": {

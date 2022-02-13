@@ -1,9 +1,13 @@
 {
   "name": "@regenerate/jest-matchers",
-  "version": "1.0.0",
+  "version": "1.0.1-0",
   "description": "Jest matchers that allows to assert regenerate effect streams easily",
   "main": "./build/cjs/index.js",
   "types": "types/index.d.ts",
+  "files": [
+    "build",
+    "types"
+  ],
   "repository": "https://github.com/d-asensio/regenerate.git",
   "author": "David Asensio Cañas <david.asensio@icloud.com>",
   "license": "MIT",

@@ -1,6 +1,5 @@
 {
   "name": "@regenerate/example-react-todos",
-  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "react-scripts start",
@@ -15,6 +14,7 @@
     "grommet": "^2.20.1",
     "grommet-icons": "^4.7.0",
     "immer": "^9.0.12",
+    "isomorphic-unfetch": "^3.1.0",
     "lodash.keyby": "^4.6.0",
     "re-reselect": "^4.0.0",
     "react": "^17.0.2",
