@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const esbuild = require('esbuild')
+const { nodeExternalsPlugin } = require('esbuild-node-externals')
 const yargs = require('yargs/yargs')
 const { hideBin } = require('yargs/helpers')
 
@@ -33,7 +34,10 @@ const commonConfig = {
   watch,
   bundle: true,
   minify: true,
-  sourcemap: true
+  sourcemap: true,
+  plugins: [
+    nodeExternalsPlugin()
+  ]
 }
 
 const configESM = {
