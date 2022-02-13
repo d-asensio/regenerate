@@ -13,7 +13,8 @@
     "watch:build": "yarn build -w"
   },
   "devDependencies": {
-    "@regenerate/scripts": "1.0.0"
+    "@regenerate/scripts": "1.0.0",
+    "zustand": "^3.7.0"
   },
   "peerDependencies": {
     "zustand": "^3.6.9"
