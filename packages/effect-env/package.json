@@ -12,9 +12,9 @@
     "watch:build": "yarn build -w"
   },
   "devDependencies": {
-    "@regenerate/scripts": "1.0.0"
+    "@regenerate/scripts": "workspace:*"
   },
   "peerDependencies": {
-    "@regenerate/core": "1.0.0"
+    "@regenerate/core": "workspace:*"
   }
 }

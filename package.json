@@ -1,6 +1,6 @@
 {
   "name": "@regenerate/wrapper",
-  "version": "1.0.0",
+  "version": "1.0.1-0",
   "description": "Manage side effects with testability and ergonomics",
   "repository": "https://github.com/d-asensio/regenerate.git",
   "author": "David Asensio Cañas <david.asensio@icloud.com>",
@@ -58,5 +58,6 @@
     "node": "16.13.2",
     "yarn": "1.22.17"
   },
-  "packageManager": "yarn@3.1.1"
+  "packageManager": "yarn@3.1.1",
+  "stableVersion": "1.0.0"
 }

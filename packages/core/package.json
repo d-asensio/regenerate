@@ -12,6 +12,6 @@
     "watch:build": "yarn build -w"
   },
   "devDependencies": {
-    "@regenerate/scripts": "1.0.0"
+    "@regenerate/scripts": "workspace:*"
   }
 }

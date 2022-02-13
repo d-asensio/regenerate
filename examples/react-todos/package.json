@@ -8,10 +8,10 @@
     "test": "react-scripts test"
   },
   "dependencies": {
-    "@regenerate/core": "1.0.0",
-    "@regenerate/effect-env": "1.0.0",
-    "@regenerate/effect-fetch": "1.0.0",
-    "@regenerate/effect-zustand-store": "1.0.0",
+    "@regenerate/core": "workspace:*",
+    "@regenerate/effect-env": "workspace:*",
+    "@regenerate/effect-fetch": "workspace:*",
+    "@regenerate/effect-zustand-store": "workspace:*",
     "grommet": "^2.20.1",
     "grommet-icons": "^4.7.0",
     "immer": "^9.0.12",
@@ -24,7 +24,7 @@
     "zustand": "^3.6.9"
   },
   "devDependencies": {
-    "@regenerate/jest-matchers": "1.0.0",
+    "@regenerate/jest-matchers": "workspace:*",
     "deep-freeze": "^0.0.1",
     "react-scripts": "5.0.0"
   },
