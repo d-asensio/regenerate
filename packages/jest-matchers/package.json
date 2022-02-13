@@ -9,11 +9,16 @@
   "license": "MIT",
   "private": false,
   "scripts": {
+    "build": "regenerate-scripts-build --cjs",
+    "watch:build": "yarn build -w",
     "types:check": "tsc --noEmit types/index.d.ts"
   },
   "dependencies": {
     "jest-matcher-utils": "^27.5.0",
     "lodash.isequal": "^4.5.0"
+  },
+  "devDependencies": {
+    "@regenerate/scripts": "1.0.0"
   },
   "peerDependencies": {
     "@regenerate/test-helpers": "1.0.0"
