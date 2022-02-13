@@ -13,5 +13,8 @@
   },
   "devDependencies": {
     "@regenerate/scripts": "1.0.0"
+  },
+  "peerDependencies": {
+    "@regenerate/core": "1.0.0"
   }
 }
