@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": true,
   "bin": {
-    "regenerate-scripts-build": "./bin/build.js"
+    "scripts-build": "./bin/build.js"
   },
   "devDependencies": {
     "esbuild": "^0.14.21",

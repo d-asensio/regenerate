@@ -9,7 +9,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "build": "regenerate-scripts-build --cjs",
+    "build": "scripts-build --cjs",
     "watch:build": "yarn build -w",
     "types:check": "tsc --noEmit types/index.d.ts"
   },
