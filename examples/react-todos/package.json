@@ -1,5 +1,5 @@
 {
-  "name": "@regenerate/react-todos",
+  "name": "@regenerate/example-react-todos",
   "version": "1.0.0",
   "private": true,
   "scripts": {

@@ -11,6 +11,7 @@
     "packages/*"
   ],
   "scripts": {
+    "build": "yarn workspaces foreach -p --no-private run build",
     "test": "jest",
     "test:watch": "jest --watch",
     "lint": "standard",
@@ -56,5 +57,6 @@
   "volta": {
     "node": "16.13.2",
     "yarn": "1.22.17"
-  }
+  },
+  "packageManager": "yarn@3.1.1"
 }
