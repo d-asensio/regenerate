@@ -2013,6 +2013,8 @@ __metadata:
   resolution: "@regenerate/effect-env@workspace:packages/effect-env"
   dependencies:
     "@regenerate/scripts": 1.0.0
+  peerDependencies:
+    "@regenerate/core": 1.0.0
   languageName: unknown
   linkType: soft
 
@@ -2021,6 +2023,8 @@ __metadata:
   resolution: "@regenerate/effect-fetch@workspace:packages/effect-fetch"
   dependencies:
     "@regenerate/scripts": 1.0.0
+  peerDependencies:
+    "@regenerate/core": 1.0.0
   languageName: unknown
   linkType: soft
 
@@ -2029,6 +2033,8 @@ __metadata:
   resolution: "@regenerate/effect-sleep@workspace:packages/effect-sleep"
   dependencies:
     "@regenerate/scripts": 1.0.0
+  peerDependencies:
+    "@regenerate/core": 1.0.0
   languageName: unknown
   linkType: soft
 
@@ -2039,6 +2045,7 @@ __metadata:
     "@regenerate/scripts": 1.0.0
     zustand: ^3.7.0
   peerDependencies:
+    "@regenerate/core": 1.0.0
     zustand: ^3.6.9
   languageName: unknown
   linkType: soft
