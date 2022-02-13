@@ -7,6 +7,13 @@
   "author": "David Asensio Cañas <david.asensio@icloud.com>",
   "license": "MIT",
   "private": false,
+  "scripts": {
+    "build": "regenerate-scripts-build",
+    "watch:build": "regenerate-scripts-build -w"
+  },
+  "devDependencies": {
+    "@regenerate/scripts": "1.0.0"
+  },
   "peerDependencies": {
     "zustand": "^3.6.9"
   }
