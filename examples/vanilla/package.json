@@ -1,0 +1,19 @@
+{
+  "name": "@regenerate/vanilla",
+  "version": "1.0.0",
+  "repository": "https://github.com/d-asensio/regenerate.git",
+  "author": "David Asensio Cañas <david.asensio@icloud.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "babel-node src/index.js"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.0",
+    "@babel/node": "^7.16.8",
+    "@babel/preset-env": "^7.16.11"
+  },
+  "dependencies": {
+    "isomorphic-unfetch": "^3.1.0"
+  }
+}
