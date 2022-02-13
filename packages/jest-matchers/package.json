@@ -1,6 +1,6 @@
 {
   "name": "@regenerate/jest-matchers",
-  "version": "1.0.1-0",
+  "version": "1.0.2-alpha",
   "description": "Jest matchers that allows to assert regenerate effect streams easily",
   "main": "./build/cjs/index.js",
   "types": "types/index.d.ts",
@@ -17,11 +17,11 @@
     "types:check": "tsc --noEmit types/index.d.ts"
   },
   "dependencies": {
-    "@regenerate/test-helpers": "workspace:^",
+    "@regenerate/test-helpers": "1.0.2-alpha",
     "jest-matcher-utils": "^27.5.0",
     "lodash.isequal": "^4.5.0"
   },
   "devDependencies": {
-    "@regenerate/scripts": "workspace:^"
+    "@regenerate/scripts": "1.0.2-alpha"
   }
 }

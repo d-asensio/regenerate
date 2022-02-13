@@ -1,6 +1,6 @@
 {
   "name": "@regenerate/core",
-  "version": "1.0.1-0",
+  "version": "1.0.2-alpha",
   "description": "Manage side effects with testability and ergonomics",
   "main": "./build/cjs/index.js",
   "module": "./build/esm/index.js",
@@ -15,6 +15,6 @@
     "watch:build": "yarn build -w"
   },
   "devDependencies": {
-    "@regenerate/scripts": "workspace:^"
+    "@regenerate/scripts": "1.0.2-alpha"
   }
 }

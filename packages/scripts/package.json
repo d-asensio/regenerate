@@ -15,5 +15,6 @@
     "esbuild": "^0.14.21",
     "esbuild-node-externals": "^1.4.1",
     "yargs": "^17.3.1"
-  }
+  },
+  "version": "1.0.2-alpha"
 }

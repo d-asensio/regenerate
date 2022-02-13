@@ -1,6 +1,6 @@
 {
   "name": "@regenerate/effect-env",
-  "version": "1.0.1-0",
+  "version": "1.0.2-alpha",
   "description": "Regenerate effect to access environment variables",
   "main": "./build/cjs/index.js",
   "module": "./build/esm/index.js",
@@ -15,9 +15,9 @@
     "watch:build": "yarn build -w"
   },
   "devDependencies": {
-    "@regenerate/scripts": "workspace:^"
+    "@regenerate/scripts": "1.0.2-alpha"
   },
   "peerDependencies": {
-    "@regenerate/core": "workspace:^"
+    "@regenerate/core": "1.0.2-alpha"
   }
 }
