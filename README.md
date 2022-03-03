@@ -2,13 +2,14 @@
 
 A tiny module to manage side effects in a declarative way, with testability and ergonomics in mind.
 
-> **Warning:** Regenerate is still under development, it not battle-tested and the API is subject to change, but it is getting there soon!
+> **Warning:** Regenerate is still under development, it is not battle-tested and the API is subject to change, but it is getting there soon!
 
 ## Table of Contents
 
 <!-- toc -->
 
 - [Quick introduction](#quick-introduction)
+- [Core principles](#core-principles)
 - [Installation](#installation)
 - [Examples](#examples)
 - [Setting up Jest](#setting-up-jest)
@@ -23,7 +24,7 @@ A tiny module to manage side effects in a declarative way, with testability and 
 
 Side effects are sometimes difficult to test. It's common to end up mocking a lot of infrastructure pieces (HTTP calls, browser API's, etc.) to test them, and this makes tests to become tedious and difficult to understand.
 
-Regenerate aims to make it very easy to implement and test side effects. It is inspired by [reffects](https://github.com/trovit/reffects), [re-frame](https://github.com/day8/re-frame) and [redux-saga](https://github.com/redux-saga/redux-saga) but tries to improve on them by applying some learnings and insights that we gathered over the years.
+Regenerate aims to make it very easy to implement and test side effects. It is inspired by [reffects](https://github.com/trovit/reffects) (which is based on [re-frame](https://github.com/day8/re-frame)) and [redux-saga](https://github.com/redux-saga/redux-saga) but tries to improve on them by applying some learnings and insights that we gathered over the years.
 
 To illustrate that, let's see an example, it should not need more explanation than the code itself:
 
@@ -58,7 +59,7 @@ it('should fetch and store products', () => {
     fetchProducts()
   ).toGenerateEffects([
     {
-      effect: yield http.fetch('https:/api.company.com/products'),
+      effect: http.fetch('https:/api.company.com/products'),
       returns: products
     },
     {
@@ -72,7 +73,7 @@ it('should store empty array if the products API fails', () => {
     fetchProducts()
   ).toGenerateEffects([
     {
-      effect: yield http.fetch('https:/api.company.com/products'),
+      effect: http.fetch('https:/api.company.com/products'),
       throws: new HttpError()
     },
     {
@@ -88,6 +89,16 @@ run(
   fetchProducts()
 )
 ```
+
+## Core principles
+
+**Testability**
+
+**Ergonomics**
+
+**Single responsibility**
+
+**Progressive adoption**
 
 ## Installation
 
