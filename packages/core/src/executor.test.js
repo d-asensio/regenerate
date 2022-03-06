@@ -1,5 +1,5 @@
 import effectExecutor, { UnableToExecuteEffectError } from './executor'
-import effectDescriptor from './descriptor'
+import { create } from './descriptor'
 
 describe('exec', () => {
   it('should execute an effect descriptor function with its defined arguments', async () => {
@@ -9,7 +9,7 @@ describe('exec', () => {
       'an-argument',
       'another-argument'
     ]
-    const descriptor = effectDescriptor.create(fn, args)
+    const descriptor = create(fn, args)
 
     await effectExecutor.exec(descriptor)
 
@@ -19,7 +19,7 @@ describe('exec', () => {
   it('should execute an effect descriptor function without arguments', async () => {
     const fnMock = jest.fn()
     const fn = (...args) => fnMock(...args)
-    const descriptor = effectDescriptor.create(fn)
+    const descriptor = create(fn)
 
     await effectExecutor.exec(descriptor)
 
@@ -27,7 +27,7 @@ describe('exec', () => {
   })
 
   it('should throw a UnableToExecuteEffectError in case the provided effect has no valid function', async () => {
-    const invalidEffectDescriptor = effectDescriptor.create()
+    const invalidEffectDescriptor = create()
 
     const act = async () => effectExecutor.exec(invalidEffectDescriptor)
 
@@ -37,7 +37,7 @@ describe('exec', () => {
   it('should throw a UnableToExecuteEffectError in case the provided effect has no valid arguments', async () => {
     const fn = () => {}
     const args = 'invalid-arguments'
-    const invalidEffectDescriptor = effectDescriptor.create(fn, args)
+    const invalidEffectDescriptor = create(fn, args)
 
     const act = async () => effectExecutor.exec(invalidEffectDescriptor)
 

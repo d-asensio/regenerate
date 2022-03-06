@@ -1,8 +1,8 @@
-import effectDescriptor from './descriptor'
+import { isValid } from './descriptor'
 
 const effectExecutor = (function IIFE () {
   async function exec (descriptor) {
-    if (!effectDescriptor.isValid(descriptor)) {
+    if (!isValid(descriptor)) {
       throw new UnableToExecuteEffectError(
         'The effect is not valid and thus not executed.'
       )

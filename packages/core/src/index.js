@@ -1,5 +1,5 @@
 import runner from './runner'
-import descriptor from './descriptor'
+import { create } from './descriptor'
 
-export const createEffect = (fn) => (...args) => descriptor.create(fn, args)
+export const createEffect = (fn) => (...args) => create(fn, args)
 export const run = runner.run
