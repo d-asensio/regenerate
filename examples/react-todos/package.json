@@ -7,10 +7,10 @@
     "test": "react-scripts test"
   },
   "dependencies": {
-    "@regenerate/core": "1.0.2-alpha",
-    "@regenerate/effect-env": "1.0.2-alpha",
-    "@regenerate/effect-fetch": "1.0.2-alpha",
-    "@regenerate/effect-zustand-store": "1.0.2-alpha",
+    "@regenerate/core": "1.0.2",
+    "@regenerate/effect-env": "1.0.2",
+    "@regenerate/effect-fetch": "1.0.2",
+    "@regenerate/effect-zustand-store": "1.0.2",
     "grommet": "^2.20.1",
     "grommet-icons": "^4.7.0",
     "immer": "^9.0.12",
@@ -24,7 +24,7 @@
     "zustand": "^3.6.9"
   },
   "devDependencies": {
-    "@regenerate/jest-matchers": "1.0.2-alpha",
+    "@regenerate/jest-matchers": "1.0.2",
     "deep-freeze": "^0.0.1",
     "react-scripts": "5.0.0"
   },
@@ -46,5 +46,5 @@
       "last 1 safari version"
     ]
   },
-  "version": "1.0.2-alpha"
+  "version": "1.0.2"
 }
