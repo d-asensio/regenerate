@@ -5,8 +5,8 @@ export const effectDescriptor = (function IIFE () {
     return { fn, args }
   }
 
-  function isValid (descriptor) {
-
+  function isValid ({ fn }) {
+    return fn instanceof Function
   }
 
   return {
@@ -38,7 +38,15 @@ export function createEffectExecutor (dependencies = {}) {
     }
   }
 
-  async function execV2 ({ fn, args }) {
+  async function execV2 (descriptor) {
+    if (!effectDescriptor.isValid(descriptor)) {
+      throw new UnableToExecuteEffectError(
+        'The effect is not valid and thus not executed.'
+      )
+    }
+
+    const { fn, args } = descriptor
+
     return fn(...args)
   }
 

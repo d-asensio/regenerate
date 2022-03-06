@@ -83,7 +83,8 @@ describe('execV2', () => {
   const effectExecutor = createEffectExecutor()
 
   it('should execute an effect descriptor function with its defined arguments', async () => {
-    const fn = jest.fn()
+    const fnMock = jest.fn()
+    const fn = (...args) => fnMock(...args)
     const args = [
       'an-argument',
       'another-argument'
@@ -92,15 +93,24 @@ describe('execV2', () => {
 
     await effectExecutor.execV2(descriptor)
 
-    expect(fn).toHaveBeenCalledWith(...args)
+    expect(fnMock).toHaveBeenCalledWith(...args)
   })
 
   it('should execute an effect descriptor function without arguments', async () => {
-    const fn = jest.fn()
+    const fnMock = jest.fn()
+    const fn = (...args) => fnMock(...args)
     const descriptor = effectDescriptor.create(fn)
 
     await effectExecutor.execV2(descriptor)
 
-    expect(fn).toHaveBeenCalledWith()
+    expect(fnMock).toHaveBeenCalledWith()
+  })
+
+  it('should throw a UnableToExecuteEffectError in case the provided effect has no valid function', async () => {
+    const invalidEffectDescriptor = effectDescriptor.create()
+
+    const act = async () => effectExecutor.execV2(invalidEffectDescriptor)
+
+    await expect(act).rejects.toThrowWithMessage(UnableToExecuteEffectError, 'The effect is not valid and thus not executed.')
   })
 })
