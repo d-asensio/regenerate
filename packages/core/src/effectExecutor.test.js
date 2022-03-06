@@ -1,5 +1,5 @@
 import { when } from 'jest-when'
-import { createEffectExecutor, UnableToExecuteEffectError } from './effectExecutor'
+import { createEffectExecutor, effectDescriptor, UnableToExecuteEffectError } from './effectExecutor'
 import { EffectDescriptor } from './effectDescriptor'
 import { NotRegisteredEffectError } from './effectRegistry'
 
@@ -76,5 +76,31 @@ describe('exec', () => {
     const act = async () => effectExecutor.exec(effectDescriptor)
 
     await expect(act).rejects.toThrowWithMessage(UnableToExecuteEffectError, `The effect identified by "${effectId}" is not registered and thus not executed.`)
+  })
+})
+
+describe('execV2', () => {
+  const effectExecutor = createEffectExecutor()
+
+  it('should execute an effect descriptor function with its defined arguments', async () => {
+    const fn = jest.fn()
+    const args = [
+      'an-argument',
+      'another-argument'
+    ]
+    const descriptor = effectDescriptor.create(fn, args)
+
+    await effectExecutor.execV2(descriptor)
+
+    expect(fn).toHaveBeenCalledWith(...args)
+  })
+
+  it('should execute an effect descriptor function without arguments', async () => {
+    const fn = jest.fn()
+    const descriptor = effectDescriptor.create(fn)
+
+    await effectExecutor.execV2(descriptor)
+
+    expect(fn).toHaveBeenCalledWith()
   })
 })

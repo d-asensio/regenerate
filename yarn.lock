@@ -2138,31 +2138,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@regenerate/core@workspace:^, @regenerate/core@workspace:packages/core":
+"@regenerate/core@1.0.2-alpha, @regenerate/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@regenerate/core@workspace:packages/core"
   dependencies:
-    "@regenerate/scripts": "workspace:^"
+    "@regenerate/scripts": 1.0.2-alpha
   languageName: unknown
   linkType: soft
 
-"@regenerate/effect-env@workspace:^, @regenerate/effect-env@workspace:packages/effect-env":
+"@regenerate/effect-env@1.0.2-alpha, @regenerate/effect-env@workspace:packages/effect-env":
   version: 0.0.0-use.local
   resolution: "@regenerate/effect-env@workspace:packages/effect-env"
   dependencies:
-    "@regenerate/scripts": "workspace:^"
+    "@regenerate/scripts": 1.0.2-alpha
   peerDependencies:
-    "@regenerate/core": "workspace:^"
+    "@regenerate/core": 1.0.2-alpha
   languageName: unknown
   linkType: soft
 
-"@regenerate/effect-fetch@workspace:^, @regenerate/effect-fetch@workspace:packages/effect-fetch":
+"@regenerate/effect-fetch@1.0.2-alpha, @regenerate/effect-fetch@workspace:packages/effect-fetch":
   version: 0.0.0-use.local
   resolution: "@regenerate/effect-fetch@workspace:packages/effect-fetch"
   dependencies:
-    "@regenerate/scripts": "workspace:^"
+    "@regenerate/scripts": 1.0.2-alpha
   peerDependencies:
-    "@regenerate/core": "workspace:^"
+    "@regenerate/core": 1.0.2-alpha
   languageName: unknown
   linkType: soft
 
@@ -2170,20 +2170,20 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@regenerate/effect-sleep@workspace:packages/effect-sleep"
   dependencies:
-    "@regenerate/scripts": "workspace:^"
+    "@regenerate/scripts": 1.0.2-alpha
   peerDependencies:
-    "@regenerate/core": "workspace:^"
+    "@regenerate/core": 1.0.2-alpha
   languageName: unknown
   linkType: soft
 
-"@regenerate/effect-zustand-store@workspace:^, @regenerate/effect-zustand-store@workspace:packages/effect-zustand-store":
+"@regenerate/effect-zustand-store@1.0.2-alpha, @regenerate/effect-zustand-store@workspace:packages/effect-zustand-store":
   version: 0.0.0-use.local
   resolution: "@regenerate/effect-zustand-store@workspace:packages/effect-zustand-store"
   dependencies:
-    "@regenerate/scripts": "workspace:^"
+    "@regenerate/scripts": 1.0.2-alpha
     zustand: ^3.7.0
   peerDependencies:
-    "@regenerate/core": "workspace:^"
+    "@regenerate/core": 1.0.2-alpha
     zustand: ^3.6.9
   languageName: unknown
   linkType: soft
@@ -2192,11 +2192,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@regenerate/example-react-todos@workspace:examples/react-todos"
   dependencies:
-    "@regenerate/core": "workspace:^"
-    "@regenerate/effect-env": "workspace:^"
-    "@regenerate/effect-fetch": "workspace:^"
-    "@regenerate/effect-zustand-store": "workspace:^"
-    "@regenerate/jest-matchers": "workspace:^"
+    "@regenerate/core": 1.0.2-alpha
+    "@regenerate/effect-env": 1.0.2-alpha
+    "@regenerate/effect-fetch": 1.0.2-alpha
+    "@regenerate/effect-zustand-store": 1.0.2-alpha
+    "@regenerate/jest-matchers": 1.0.2-alpha
     deep-freeze: ^0.0.1
     grommet: ^2.20.1
     grommet-icons: ^4.7.0
@@ -2224,18 +2224,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@regenerate/jest-matchers@workspace:^, @regenerate/jest-matchers@workspace:packages/jest-matchers":
+"@regenerate/jest-matchers@1.0.2-alpha, @regenerate/jest-matchers@workspace:packages/jest-matchers":
   version: 0.0.0-use.local
   resolution: "@regenerate/jest-matchers@workspace:packages/jest-matchers"
   dependencies:
-    "@regenerate/scripts": "workspace:^"
-    "@regenerate/test-helpers": "workspace:^"
+    "@regenerate/scripts": 1.0.2-alpha
+    "@regenerate/test-helpers": 1.0.2-alpha
     jest-matcher-utils: ^27.5.0
     lodash.isequal: ^4.5.0
   languageName: unknown
   linkType: soft
 
-"@regenerate/scripts@workspace:^, @regenerate/scripts@workspace:packages/scripts":
+"@regenerate/scripts@1.0.2-alpha, @regenerate/scripts@workspace:packages/scripts":
   version: 0.0.0-use.local
   resolution: "@regenerate/scripts@workspace:packages/scripts"
   dependencies:
@@ -2247,14 +2247,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@regenerate/test-helpers@workspace:^, @regenerate/test-helpers@workspace:packages/test-helpers":
+"@regenerate/test-helpers@1.0.2-alpha, @regenerate/test-helpers@workspace:packages/test-helpers":
   version: 0.0.0-use.local
   resolution: "@regenerate/test-helpers@workspace:packages/test-helpers"
   dependencies:
-    "@regenerate/scripts": "workspace:^"
+    "@regenerate/scripts": 1.0.2-alpha
     lodash.isequal: ^4.5.0
   peerDependencies:
-    "@regenerate/core": "workspace:^"
+    "@regenerate/core": 1.0.2-alpha
   languageName: unknown
   linkType: soft
 

@@ -1,5 +1,20 @@
 import defaultEffectRegistry, { NotRegisteredEffectError } from './effectRegistry'
 
+export const effectDescriptor = (function IIFE () {
+  function create (fn, args = []) {
+    return { fn, args }
+  }
+
+  function isValid (descriptor) {
+
+  }
+
+  return {
+    create,
+    isValid
+  }
+})()
+
 export function createEffectExecutor (dependencies = {}) {
   const {
     effectRegistry = defaultEffectRegistry
@@ -23,7 +38,11 @@ export function createEffectExecutor (dependencies = {}) {
     }
   }
 
-  return { exec }
+  async function execV2 ({ fn, args }) {
+    return fn(...args)
+  }
+
+  return { exec, execV2 }
 }
 
 export class UnableToExecuteEffectError extends Error {
