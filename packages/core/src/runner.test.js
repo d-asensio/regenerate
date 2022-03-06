@@ -1,13 +1,13 @@
 import { when } from 'jest-when'
-import { createEffectsRunner, InvalidEffectStreamError } from './effectsRunner'
-import { UnableToExecuteEffectError } from './effectExecutor'
+import { createRunner, InvalidEffectStreamError } from './runner'
+import { UnableToExecuteEffectError } from './executor'
 
 const effectExecutor = {
   exec: jest.fn()
 }
 
 describe('run', () => {
-  const effectsRunner = createEffectsRunner({ effectExecutor })
+  const effectsRunner = createRunner({ effectExecutor })
 
   it('should run multiple effects using the effect executor', async () => {
     const firstEffectDescriptor = 'any-effect-descriptor'

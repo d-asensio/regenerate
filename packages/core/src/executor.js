@@ -1,6 +1,6 @@
-import { effectDescriptor } from './effectDescriptor'
+import effectDescriptor from './descriptor'
 
-export function createEffectExecutor () {
+const effectExecutor = (function IIFE () {
   async function exec (descriptor) {
     if (!effectDescriptor.isValid(descriptor)) {
       throw new UnableToExecuteEffectError(
@@ -14,7 +14,7 @@ export function createEffectExecutor () {
   }
 
   return { exec }
-}
+})()
 
 export class UnableToExecuteEffectError extends Error {
   constructor (message) {
@@ -23,4 +23,4 @@ export class UnableToExecuteEffectError extends Error {
   }
 }
 
-export default createEffectExecutor()
+export default effectExecutor

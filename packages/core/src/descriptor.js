@@ -1,4 +1,4 @@
-export const effectDescriptor = (function IIFE () {
+const effectDescriptor = (function IIFE () {
   function create (fn, args = []) {
     return { fn, args }
   }

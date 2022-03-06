@@ -1,9 +1,7 @@
-import { createEffectExecutor, UnableToExecuteEffectError } from './effectExecutor'
-import { effectDescriptor } from './effectDescriptor'
+import effectExecutor, { UnableToExecuteEffectError } from './executor'
+import effectDescriptor from './descriptor'
 
 describe('exec', () => {
-  const effectExecutor = createEffectExecutor()
-
   it('should execute an effect descriptor function with its defined arguments', async () => {
     const fnMock = jest.fn()
     const fn = (...args) => fnMock(...args)

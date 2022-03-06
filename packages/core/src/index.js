@@ -1,5 +1,5 @@
-import effectsRunner from './effectsRunner'
-import effectDescriptor from './effectDescriptor'
+import runner from './runner'
+import descriptor from './descriptor'
 
-export const createEffect = (fn) => (...args) => effectDescriptor.create(fn, args)
-export const run = effectsRunner.run
+export const createEffect = (fn) => (...args) => descriptor.create(fn, args)
+export const run = runner.run

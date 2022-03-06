@@ -1,8 +1,8 @@
-import defaultEffectExecutor, { UnableToExecuteEffectError } from './effectExecutor'
+import defaultExecutor, { UnableToExecuteEffectError } from './executor'
 
-export function createEffectsRunner (dependencies = {}) {
+export function createRunner (dependencies = {}) {
   const {
-    effectExecutor = defaultEffectExecutor
+    effectExecutor = defaultExecutor
   } = dependencies
 
   async function run (effectStream) {
@@ -34,4 +34,4 @@ export class InvalidEffectStreamError extends Error {
   }
 }
 
-export default createEffectsRunner()
+export default createRunner()
