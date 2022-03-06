@@ -1,4 +1,4 @@
-import effectExecutor, { UnableToExecuteEffectError } from './executor'
+import { exec, UnableToExecuteEffectError } from './executor'
 import { create } from './descriptor'
 
 describe('exec', () => {
@@ -11,7 +11,7 @@ describe('exec', () => {
     ]
     const descriptor = create(fn, args)
 
-    await effectExecutor.exec(descriptor)
+    await exec(descriptor)
 
     expect(fnMock).toHaveBeenCalledWith(...args)
   })
@@ -21,7 +21,7 @@ describe('exec', () => {
     const fn = (...args) => fnMock(...args)
     const descriptor = create(fn)
 
-    await effectExecutor.exec(descriptor)
+    await exec(descriptor)
 
     expect(fnMock).toHaveBeenCalledWith()
   })
@@ -29,7 +29,7 @@ describe('exec', () => {
   it('should throw a UnableToExecuteEffectError in case the provided effect has no valid function', async () => {
     const invalidEffectDescriptor = create()
 
-    const act = async () => effectExecutor.exec(invalidEffectDescriptor)
+    const act = async () => exec(invalidEffectDescriptor)
 
     await expect(act).rejects.toThrowWithMessage(UnableToExecuteEffectError, 'The effect is not valid and thus not executed.')
   })
@@ -39,7 +39,7 @@ describe('exec', () => {
     const args = 'invalid-arguments'
     const invalidEffectDescriptor = create(fn, args)
 
-    const act = async () => effectExecutor.exec(invalidEffectDescriptor)
+    const act = async () => exec(invalidEffectDescriptor)
 
     await expect(act).rejects.toThrowWithMessage(UnableToExecuteEffectError, 'The effect is not valid and thus not executed.')
   })

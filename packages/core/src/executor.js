@@ -1,20 +1,16 @@
 import { isValid } from './descriptor'
 
-const effectExecutor = (function IIFE () {
-  async function exec (descriptor) {
-    if (!isValid(descriptor)) {
-      throw new UnableToExecuteEffectError(
-        'The effect is not valid and thus not executed.'
-      )
-    }
-
-    const { fn, args } = descriptor
-
-    return fn(...args)
+export async function exec (descriptor) {
+  if (!isValid(descriptor)) {
+    throw new UnableToExecuteEffectError(
+      'The effect is not valid and thus not executed.'
+    )
   }
 
-  return { exec }
-})()
+  const { fn, args } = descriptor
+
+  return fn(...args)
+}
 
 export class UnableToExecuteEffectError extends Error {
   constructor (message) {
@@ -22,5 +18,3 @@ export class UnableToExecuteEffectError extends Error {
     this.name = 'UnableToExecuteEffectError'
   }
 }
-
-export default effectExecutor

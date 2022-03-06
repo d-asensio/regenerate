@@ -1,4 +1,5 @@
-import defaultExecutor, { UnableToExecuteEffectError } from './executor'
+import * as defaultExecutor from './executor'
+import { UnableToExecuteEffectError } from './executor'
 
 export function createRunner (dependencies = {}) {
   const {
