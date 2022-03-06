@@ -1,5 +1,4 @@
 import { when } from 'jest-when'
-import { EffectDescriptor } from './effectDescriptor'
 import { createEffectsRunner, InvalidEffectStreamError } from './effectsRunner'
 import { UnableToExecuteEffectError } from './effectExecutor'
 
@@ -11,12 +10,8 @@ describe('run', () => {
   const effectsRunner = createEffectsRunner({ effectExecutor })
 
   it('should run multiple effects using the effect executor', async () => {
-    const firstEffectDescriptor = EffectDescriptor.fromObject({
-      id: 'a-effect-id'
-    })
-    const secondEffectDescriptor = EffectDescriptor.fromObject({
-      id: 'another-effect-id'
-    })
+    const firstEffectDescriptor = 'any-effect-descriptor'
+    const secondEffectDescriptor = 'any-other-effect-descriptor'
 
     const effects = (function * () {
       yield firstEffectDescriptor
@@ -32,9 +27,7 @@ describe('run', () => {
   })
 
   it('should pass the result of the effect executor back to the generator', async () => {
-    const effectDescriptor = EffectDescriptor.fromObject({
-      id: 'a-effect-id'
-    })
+    const effectDescriptor = 'any-effect-descriptor'
     const effectResult = 'a-result'
     when(effectExecutor.exec)
       .calledWith(effectDescriptor)
@@ -52,9 +45,7 @@ describe('run', () => {
   })
 
   it('should throw a InvalidEffectStreamError if the effect executor throws a UnableToExecuteEffectError', async () => {
-    const effectDescriptor = EffectDescriptor.fromObject({
-      id: 'a-effect-id'
-    })
+    const effectDescriptor = 'any-effect-descriptor'
     when(effectExecutor.exec)
       .calledWith(effectDescriptor)
       .mockImplementationOnce(async () => {
@@ -70,9 +61,7 @@ describe('run', () => {
   })
 
   it('should throw back to the generator any error produced in the effect executor', async () => {
-    const effectDescriptor = EffectDescriptor.fromObject({
-      id: 'a-effect-id'
-    })
+    const effectDescriptor = 'any-effect-descriptor'
     when(effectExecutor.exec)
       .calledWith(effectDescriptor)
       .mockImplementationOnce(async () => {
