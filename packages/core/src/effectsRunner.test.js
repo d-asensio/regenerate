@@ -51,19 +51,6 @@ describe('run', () => {
     expect(executionResult).toEqual(effectResult)
   })
 
-  it('should throw a InvalidEffectStreamError if the generator yields a value that is not a valid EffectDescriptor', async () => {
-    const effects = (function * () {
-      yield 'an-invalid-effect-descriptor'
-    }())
-
-    const act = async () => effectsRunner.run(effects)
-
-    await expect(act).rejects.toThrowWithMessage(
-      InvalidEffectStreamError,
-      'Potential side effect detected! A generator can only yield valid effects.'
-    )
-  })
-
   it('should throw a InvalidEffectStreamError if the effect executor throws a UnableToExecuteEffectError', async () => {
     const effectDescriptor = EffectDescriptor.fromObject({
       id: 'a-effect-id'

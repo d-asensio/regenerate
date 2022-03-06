@@ -1,5 +1,4 @@
 import defaultEffectExecutor, { UnableToExecuteEffectError } from './effectExecutor'
-import { EffectDescriptor } from './effectDescriptor'
 
 export function createEffectsRunner (dependencies = {}) {
   const {
@@ -12,8 +11,6 @@ export function createEffectsRunner (dependencies = {}) {
     do {
       const { value: effectDescriptor } = iteratee
 
-      validEffectDescriptorOrThrow(effectDescriptor)
-
       try {
         const effectResult = await effectExecutor.exec(effectDescriptor)
         iteratee = effectStream.next(effectResult)
@@ -25,12 +22,6 @@ export function createEffectsRunner (dependencies = {}) {
         iteratee = effectStream.throw(e)
       }
     } while (!iteratee.done)
-  }
-
-  function validEffectDescriptorOrThrow (effectDescriptor) {
-    if (!EffectDescriptor.isValid(effectDescriptor)) {
-      throw new InvalidEffectStreamError('Potential side effect detected! A generator can only yield valid effects.')
-    }
   }
 
   return { run }
