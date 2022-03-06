@@ -1,43 +1,19 @@
-export class EffectDescriptor {
-  #id
-  #args
-
-  static fromObject ({ id, args }) {
-    return new EffectDescriptor(id, args)
+export const effectDescriptor = (function IIFE () {
+  function create (fn, args = []) {
+    return { fn, args }
   }
 
-  static isValid (effectDescriptor) {
+  function isValid ({ fn, args }) {
     return (
-      EffectDescriptor.#isValidInstance(effectDescriptor) &&
-      EffectDescriptor.#containsEffectIdentifier(effectDescriptor)
+      fn instanceof Function &&
+      args instanceof Array
     )
   }
 
-  static toObject ({ id, args }) {
-    return {
-      id,
-      args
-    }
+  return {
+    create,
+    isValid
   }
+})()
 
-  static #isValidInstance (effectDescriptor) {
-    return effectDescriptor instanceof EffectDescriptor
-  }
-
-  static #containsEffectIdentifier (effectDescriptor) {
-    return effectDescriptor.id !== undefined
-  }
-
-  constructor (id, args = []) {
-    this.#id = id
-    this.#args = args
-  }
-
-  get id () {
-    return this.#id
-  }
-
-  get args () {
-    return this.#args
-  }
-}
+export default effectDescriptor

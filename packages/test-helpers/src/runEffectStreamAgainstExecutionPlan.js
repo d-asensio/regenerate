@@ -1,4 +1,3 @@
-import { EffectDescriptor } from '@regenerate/core'
 import isEqual from 'lodash.isequal'
 
 export function runEffectStreamAgainstExecutionPlan (effectIterator, executionPlan) {
@@ -20,13 +19,10 @@ export function runEffectStreamAgainstExecutionPlan (effectIterator, executionPl
       throw new Error('An effect recipe cannot contain both returns and throws values')
     }
 
-    const receivedEffectObject = EffectDescriptor.toObject(receivedEffect)
-    const expectedEffectObject = EffectDescriptor.toObject(expectedEffect)
+    received.push(receivedEffect)
+    expected.push(expectedEffect)
 
-    received.push(receivedEffectObject)
-    expected.push(expectedEffectObject)
-
-    if (!isEqual(receivedEffectObject, expectedEffectObject)) {
+    if (!isEqual(receivedEffect, expectedEffect)) {
       break
     }
 

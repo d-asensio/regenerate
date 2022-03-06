@@ -1,6 +1,5 @@
-import effectRegistry from './effectRegistry'
 import effectsRunner from './effectsRunner'
+import effectDescriptor from './effectDescriptor'
 
-export * from './effectDescriptor'
-export const createEffect = effectRegistry.create
+export const createEffect = (fn) => (...args) => effectDescriptor.create(fn, args)
 export const run = effectsRunner.run

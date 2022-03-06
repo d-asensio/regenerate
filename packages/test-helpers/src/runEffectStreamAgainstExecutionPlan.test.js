@@ -1,4 +1,3 @@
-import { EffectDescriptor } from '@regenerate/core'
 import { runEffectStreamAgainstExecutionPlan } from './runEffectStreamAgainstExecutionPlan'
 
 /**
@@ -9,12 +8,8 @@ import { runEffectStreamAgainstExecutionPlan } from './runEffectStreamAgainstExe
 
 describe('runEffectStreamAgainstExecutionPlan', () => {
   it('should return an object having received descriptors from the effect stream and expected descriptors from the execution plan', () => {
-    const firstEffectDescriptor = EffectDescriptor.fromObject({
-      id: 'a-effect-id'
-    })
-    const secondEffectDescriptor = EffectDescriptor.fromObject({
-      id: 'another-effect-id'
-    })
+    const firstEffectDescriptor = 'any-effect-descriptor'
+    const secondEffectDescriptor = 'any-other-effect-descriptor'
     const effectStream = (function * () {
       yield firstEffectDescriptor
       yield secondEffectDescriptor
@@ -32,40 +27,20 @@ describe('runEffectStreamAgainstExecutionPlan', () => {
 
     expect(result).toStrictEqual({
       expected: [
-        EffectDescriptor.toObject(firstEffectDescriptor),
-        EffectDescriptor.toObject(secondEffectDescriptor)
+        firstEffectDescriptor,
+        secondEffectDescriptor
       ],
       received: [
-        EffectDescriptor.toObject(firstEffectDescriptor),
-        EffectDescriptor.toObject(secondEffectDescriptor)
+        firstEffectDescriptor,
+        secondEffectDescriptor
       ]
     })
   })
 
   it('should stop execution after finding mismatching descriptors in the effect stream and the execution plan (using deep equality)', () => {
-    const receivedEffectDescriptor = EffectDescriptor.fromObject({
-      id: 'a-received-effect-id',
-      args: [
-        {
-          a: {
-            deep: 'value'
-          }
-        }
-      ]
-    })
-    const expectedEffectDescriptor = EffectDescriptor.fromObject({
-      id: 'a-received-effect-id',
-      args: [
-        {
-          a: {
-            deep: 'different value'
-          }
-        }
-      ]
-    })
-    const unreachableEffectDescriptor = EffectDescriptor.fromObject({
-      id: 'a-unreacahble-effect-id'
-    })
+    const receivedEffectDescriptor = 'a-effect-descriptor'
+    const expectedEffectDescriptor = 'a-expected-effect-descriptor'
+    const unreachableEffectDescriptor = 'a-unreachable-effect-descriptor'
     const effectStream = (function * () {
       yield receivedEffectDescriptor
       yield unreachableEffectDescriptor
@@ -83,18 +58,16 @@ describe('runEffectStreamAgainstExecutionPlan', () => {
 
     expect(result).toStrictEqual({
       expected: [
-        EffectDescriptor.toObject(expectedEffectDescriptor)
+        expectedEffectDescriptor
       ],
       received: [
-        EffectDescriptor.toObject(receivedEffectDescriptor)
+        receivedEffectDescriptor
       ]
     })
   })
 
   it('should pass back to the generator return values described in the execution plan', () => {
-    const effectDescriptor = EffectDescriptor.fromObject({
-      id: 'a-effect-id'
-    })
+    const effectDescriptor = 'any-effect-descriptor'
     const expectedReturnValue = 'a-return-value'
     let receivedReturnValue
     const effectStream = (function * () {
@@ -113,9 +86,7 @@ describe('runEffectStreamAgainstExecutionPlan', () => {
   })
 
   it('should throw back to the generator errors described in the execution plan', () => {
-    const effectDescriptor = EffectDescriptor.fromObject({
-      id: 'a-effect-id'
-    })
+    const effectDescriptor = 'any-effect-descriptor'
     const expectedError = new Error()
     const effectStream = (function * () {
       yield effectDescriptor
@@ -133,9 +104,7 @@ describe('runEffectStreamAgainstExecutionPlan', () => {
   })
 
   it('should not allow execution plan recipes having both returns and throws values', () => {
-    const effectDescriptor = EffectDescriptor.fromObject({
-      id: 'a-effect-id'
-    })
+    const effectDescriptor = 'any-effect-descriptor'
     const effectStream = (function * () {
       yield effectDescriptor
     }())
@@ -153,12 +122,8 @@ describe('runEffectStreamAgainstExecutionPlan', () => {
   })
 
   it('should not allow the execution plan to be larger than the effect stream', () => {
-    const firstEffectDescriptor = EffectDescriptor.fromObject({
-      id: 'a-effect-id'
-    })
-    const secondEffectDescriptor = EffectDescriptor.fromObject({
-      id: 'another-effect-id'
-    })
+    const firstEffectDescriptor = 'any-effect-descriptor'
+    const secondEffectDescriptor = 'any-other-effect-descriptor'
     const effectStream = (function * () {
       yield firstEffectDescriptor
     }())
@@ -177,12 +142,8 @@ describe('runEffectStreamAgainstExecutionPlan', () => {
   })
 
   it('should not allow the effect stream to be larger than the execution plan', () => {
-    const firstEffectDescriptor = EffectDescriptor.fromObject({
-      id: 'a-effect-id'
-    })
-    const secondEffectDescriptor = EffectDescriptor.fromObject({
-      id: 'another-effect-id'
-    })
+    const firstEffectDescriptor = 'any-effect-descriptor'
+    const secondEffectDescriptor = 'any-other-effect-descriptor'
     const effectStream = (function * () {
       yield firstEffectDescriptor
       yield secondEffectDescriptor
