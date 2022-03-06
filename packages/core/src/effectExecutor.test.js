@@ -113,4 +113,14 @@ describe('execV2', () => {
 
     await expect(act).rejects.toThrowWithMessage(UnableToExecuteEffectError, 'The effect is not valid and thus not executed.')
   })
+
+  it('should throw a UnableToExecuteEffectError in case the provided effect has no valid arguments', async () => {
+    const fn = () => {}
+    const args = 'invalid-arguments'
+    const invalidEffectDescriptor = effectDescriptor.create(fn, args)
+
+    const act = async () => effectExecutor.execV2(invalidEffectDescriptor)
+
+    await expect(act).rejects.toThrowWithMessage(UnableToExecuteEffectError, 'The effect is not valid and thus not executed.')
+  })
 })

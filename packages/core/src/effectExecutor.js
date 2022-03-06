@@ -5,8 +5,11 @@ export const effectDescriptor = (function IIFE () {
     return { fn, args }
   }
 
-  function isValid ({ fn }) {
-    return fn instanceof Function
+  function isValid ({ fn, args }) {
+    return (
+      fn instanceof Function &&
+      args instanceof Array
+    )
   }
 
   return {
